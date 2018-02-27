@@ -1,30 +1,62 @@
 #!/usr/bin/python3
 
+import sys
+import Korby
 import tkinter as tk
 import time
 import queue
 
-class Button():
+class GUI():
+    
+    def __init__(self):
+        self.win = tk.Tk()
+        self.Korb = Korby.Korby(self.win)
+        # load background image
+        self.bg_img = tk.PhotoImage(file='korby_face_smaller.gif')
+        self.bg_label = tk.Label(self.win, image=self.bg_img)
+        # place background image
+        self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+ 
 
-    def makeDrill():
-        print("boop")
-#        instance = tk.Button(frame, text='Move', width=25, height=10, command=m.popUp)
-#        Button.place(instance)
+    def go(self):
+        print('go')    
+ 
+    def moveHead(self, direction, time):
+        self.Korb.moveHeadU()
+      
+    def center(self):
+        self.Korb.reset()
+ 
+    def run(self):
+        self.win.title("It's just a drill")
+
+        self.win.geometry("800x500")
+
+        headButton = tk.Button(self.win, width="20", text="Drill", command=self.Korb.moveHeadU)
+        headButton.grid(column=0, row=0, pady=10, padx=10)
+
+        centerButton = tk.Button(self.win, width="20", text="Center", command=self.center)
+        centerButton.grid(column=1, row=0, pady=10, padx=10)
+       
+        
+ 
+
+#        frame = tk.Frame(self.win, width=920, height=500)
+#        frame.grid(columnspan=4, row=4, padx=15, pady=10)
+#        frame.grid_propagate(False)
+
+        self.win.mainloop()
+
 
 if __name__ == '__main__':
-    
-    win = tk.Tk()
-    win.title("It's just a drill")
 
-    drillButton = tk.Button(win, width="20", text="Drill", command=Button.makeDrill)
-    drillButton.grid(column=0, row=0, pady=10)
+    gui = GUI()
 
-    frame = tk.Frame(win, width=920, height=500)
-    frame.grid(columnspan=4, row=1, padx=15, pady=10)
-#    frame.grid_propagate(False)
+    if len(sys.argv) == 1:
+        gui.center()        
 
-    win.mainloop()
-
+    if len(sys.argv) > 1:
+        gui.run() 
 
 
 
