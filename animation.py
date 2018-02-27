@@ -21,7 +21,7 @@ def update(ind):
         root.after(100, update, ind)
         
 def stop():
-        label.forget()
+        sys.exit()
        
 label = Label(root)
 label.pack()

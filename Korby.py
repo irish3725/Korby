@@ -48,11 +48,9 @@ class Korby():
         if position > 3000:
             self.x.setTarget(0, position - change)    
 
-    def moveHeadU(self):
-        change = 900
-        position = self.x.getPosition(4)
-        if position < 8000:
-            self.x.setTarget(4, position + change)
+    def moveHead(self, position):
+        self.x.setTarget(4, position)
+        self.x.setTarget(3, position)
 
     ## move head to the right a little
     def moveHeadRight(self, key):
@@ -81,6 +79,10 @@ class Korby():
         position = self.x.getPosition(4)
         if position > 2800:
             self.x.setTarget(4, position - change)
+
+    def moveWheels(self, speed):
+        print('moving wheels')
+        self.x.setTarget(1, speed)
 
     ## change wheels to move forward faster
     def moveForward(self, key):
