@@ -12,7 +12,7 @@ class GUI():
         self.win = tk.Tk()
         self.Korb = Korby.Korby(self.win)
         # load background image
-        self.bg_img = tk.PhotoImage(file='korby_face_smaller.gif')
+        self.bg_img = tk.PhotoImage(file='korby_face.gif')
         self.bg_label = tk.Label(self.win, image=self.bg_img)
         # place background image
         self.bg_label.place(x=0, y=0, relwidth=1, relheight=1)
