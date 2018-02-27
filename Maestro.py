@@ -1,5 +1,4 @@
 
-import curses
 import serial
 from sys import version_info
 #import os

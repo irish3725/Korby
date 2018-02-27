@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 
 import curses
-import serial
-from sys import version_info
 import Maestro
 
 
-## Korby is our robot!
+## Korby is the name of our robot!
 class Korby():
 
+    ## initialize a Korby object with an instance of the Maestro controller
     def __init__(self):
         self.x = Maestro.Controller()
 
@@ -113,47 +112,61 @@ class KInterface():
         self.stdscr.refresh()
 
         key = ''
+        # listen for input till we see a q
         while key != ord('q'):
             key = self.stdscr.getch()
             self.stdscr.addch(20,25,key)
             self.stdscr.refresh()
 
+            # see up pressed
             if key == curses.KEY_UP:
                 self.Korb.moveForward()
 
+            # see down pressed
             elif key == curses.KEY_DOWN:
                 self.Korb.moveBackward()
 
+            # see left pressed
             elif key == curses.KEY_LEFT:
                 self.Korb.turnLeft()
 
+            # see right pressed
             elif key == curses.KEY_RIGHT:
                 self.Korb.turnRight()
 
+            # see a pressed
             elif key == ord('a'):
                 self.Korb.moveHeadLeft()
             
+            # see s pressed
             elif key == ord('s'):
                 self.Korb.moveHeadDown()
 
+            # see d pressed
             elif key == ord('d'):
                 self.Korb.moveHeadRight()
 
+            # see w pressed
             elif key == ord('w'):
                 self.Korb.moveHeadUp()
 
+            # see q pressed
             elif key == ord('q'):
                 self.middle() 
 
+            # see z pressed
             elif key == ord('z'):
                 self.Korb.oveBodyLeft()
 
+            # see x pressed
             elif key == ord('x'):
                 self.Korb.moveBodyRight()
 
+            # see m pressed
             elif key == ord('m'):
                 self.Korb.middle()
 
+            # see n pressed
             elif key == ord('n'):
                 self.middle()
 
