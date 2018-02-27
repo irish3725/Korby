@@ -1,18 +1,20 @@
 #!/usr/bin/python3
-
 import curses
-import Maestro
+import sys
+import tkinter as tk
+from Maestro import Controller
 
 
 ## Korby is the name of our robot!
 class Korby():
 
     ## initialize a Korby object with an instance of the Maestro controller
-    def __init__(self):
-        self.x = Maestro.Controller()
+    def __init__(self, win):
+        self.root = win
+        self.x = Controller()
 
     ## set body, head, wheels to middle/not moving
-    def middle(self):
+    def middle(self, key):
         self.x.setTarget(0, 6000)
         self.x.setTarget(1, 6000)
         self.x.setTarget(2, 6000)
@@ -20,63 +22,63 @@ class Korby():
         self.x.setTarget(4, 6000)
 
     ## move body to the left a little
-    def moveBodyLeft(self):
+    def moveBodyLeft(self, key):
         change = 900
         position = x.getPosition(0)
         if position < 8000:
             self.x.setTarget(0, position + change)    
 
     ## move body to the right a little
-    def moveBodyRight(self):
+    def moveBodyRight(self, key):
         change = 900
         position = self.x.getPosition(0)
         if position > 3000:
             self.x.setTarget(0, position - change)    
 
     ## move head to the right a little
-    def moveHeadRight(self):
+    def moveHeadRight(self, key):
         change = 900
         position = self.x.getPosition(3)
         if position > 2500:
             self.x.setTarget(3, position - change)
 
     ## move head to the left a little
-    def moveHeadLeft(self):
+    def moveHeadLeft(self, key):
         change = 900
         position = self.x.getPosition(3)
         if position < 8000:
             self.x.setTarget(3, position + change)
 
     ## move head up a little
-    def moveHeadUp(self):
+    def moveHeadUp(self, key):
         change = 900    
         position = self.x.getPosition(4)
         if position < 8000:
             self.x.setTarget(4, position + change)
 
     ## move head down a little
-    def moveHeadDown(self):
+    def moveHeadDown(self, key):
         change = 900    
         position = self.x.getPosition(4)
         if position > 2800:
             self.x.setTarget(4, position - change)
 
     ## change wheels to move forward faster
-    def moveForward(self):
+    def moveForward(self, key):
         change = 300
         position = self.x.getPosition(1)
         if position > 4800:
             self.x.setTarget(1, position - change)
 
     ## change wheels to move backward faster
-    def moveBackward(self):
+    def moveBackward(self, key):
         change = 300
         position = self.x.getPosition(1)
         if position < 7200:
             self.x.setTarget(1, position + change)
 
     ## change wheels to turn left
-    def turnLeft(self):
+    def turnLeft(self, key):
         position = self.x.getPosition(2)
         if position == 6000:
             self.x.setTarget(2, 7000)
@@ -84,7 +86,7 @@ class Korby():
             self.x.setTarget(2, 6000)
 
     ## change wheels to turn right
-    def turnRight(self):
+    def turnRight(self, key):
         position = self.x.getPosition(2)
         if position == 6000:
             self.x.setTarget(2, 5000)    
@@ -92,86 +94,103 @@ class Korby():
             self.x.setTarget(2, 6000)
 
     ## stop wheels
-    def stop(self):
+    def stop(self, key):
         self.x.setTarget(1, 6000)
         self.x.setTarget(2, 6000)
+    
+    def endProgram(self, key):
+        sys.exit()
 
-class KInterface():
+def main():
 
-    def __init__(self, Korb):
-        self.Korb = Korb 
-        self.stdscr = curses.initscr()
+    win = tk.Tk()
+    Korb = Korby(win)
+     
+    win.bind('<q>', Korb.endProgram)
+    win.bind('<n>', Korb.stop)
+    win.bind('<m>', Korb.middle)
 
-    def run(self):
-        print("made it into the run function")
-        curses.cbreak()
-        self.stdscr.keypad(1)
+    win.bind('<w>', Korb.moveHeadUp) 
+    win.bind('<a>', Korb.moveHeadLeft)
+    win.bind('<s>', Korb.moveHeadDown)
+    win.bind('<d>', Korb.moveHeadRight)
 
-        # start screen with "press 'q' to quit' written on first line at 10th char
-        self.stdscr.addstr(1, 10, "press 'q' to quit")
-        self.stdscr.refresh()
+    win.bind('<z>', Korb.moveBodyLeft)
+    win.bind('<x>', Korb.moveBodyRight)
 
-        key = ''
-        # listen for input till we see a q
-        while key != ord('q'):
-            key = self.stdscr.getch()
-            self.stdscr.addch(20,25,key)
-            self.stdscr.refresh()
+    win.bind('<Up>', Korb.moveForward)
+    win.bind('<Left>', Korb.turnLeft)
+    win.bind('<Right>', Korb.turnRight)
+    win.bind('<Down>', Korb.moveBackward)
 
-            # see up pressed
-            if key == curses.KEY_UP:
-                self.Korb.moveForward()
+    win.mainloop()
 
-            # see down pressed
-            elif key == curses.KEY_DOWN:
-                self.Korb.moveBackward()
+#        self.stdscr = curses.initscr()
+    
+#        curses.cbreak()
+#        self.stdscr.keypad(1)
+#
+#        # start screen with "press 'q' to quit' written on first line at 10th char
+#        self.stdscr.addstr(1, 10, "press 'q' to quit")
+#        self.stdscr.refresh()
+#
+#        key = ''
+#        # listen for input till we see a q
+#        while key != ord('q'):
+#            key = self.stdscr.getch()
+#            self.stdscr.addch(20,25,key)
+#            self.stdscr.refresh()
+#
+#            # see up pressed
+#            if key == curses.KEY_UP:
+#                self.Korb.moveForward()
+#
+#            # see down pressed
+#            elif key == curses.KEY_DOWN:
+#                self.Korb.moveBackward()
+#
+#            # see left pressed
+#            elif key == curses.KEY_LEFT:
+#                self.Korb.turnLeft()
+#
+#           # see right pressed
+#            elif key == curses.KEY_RIGHT:
+#                self.Korb.turnRight()
+# 
+#            # see a pressed
+#            elif key == ord('a'):
+#                self.Korb.moveHeadLeft()
+#            
+#            # see s pressed
+#            elif key == ord('s'):
+#                self.Korb.moveHeadDown()
+#
+#            # see d pressed
+#            elif key == ord('d'):
+#                self.Korb.moveHeadRight()
+#
+#            # see w pressed
+#            elif key == ord('w'):
+#                self.Korb.moveHeadUp()
+#
+#            # see q pressed
+#            elif key == ord('q'):
+#                self.middle() 
+#
+#            # see z pressed
+#            elif key == ord('z'):
+#                self.Korb.oveBodyLeft()
+#
+#            # see x pressed
+#            elif key == ord('x'):
+#                self.Korb.moveBodyRight()
+#
+#            # see m pressed
+#            elif key == ord('m'):
+#                self.Korb.middle()
+#
+#            # see n pressed
+#            elif key == ord('n'):
+#                self.middle()
 
-            # see left pressed
-            elif key == curses.KEY_LEFT:
-                self.Korb.turnLeft()
-
-            # see right pressed
-            elif key == curses.KEY_RIGHT:
-                self.Korb.turnRight()
-
-            # see a pressed
-            elif key == ord('a'):
-                self.Korb.moveHeadLeft()
-            
-            # see s pressed
-            elif key == ord('s'):
-                self.Korb.moveHeadDown()
-
-            # see d pressed
-            elif key == ord('d'):
-                self.Korb.moveHeadRight()
-
-            # see w pressed
-            elif key == ord('w'):
-                self.Korb.moveHeadUp()
-
-            # see q pressed
-            elif key == ord('q'):
-                self.middle() 
-
-            # see z pressed
-            elif key == ord('z'):
-                self.Korb.oveBodyLeft()
-
-            # see x pressed
-            elif key == ord('x'):
-                self.Korb.moveBodyRight()
-
-            # see m pressed
-            elif key == ord('m'):
-                self.Korb.middle()
-
-            # see n pressed
-            elif key == ord('n'):
-                self.middle()
-
-if __name__ == '__main__':
-
-    Korb = Korby()
-    Iface = KInterface(Korb)
-    Iface.run()
+main()
