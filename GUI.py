@@ -5,6 +5,7 @@ import Korby
 import tkinter as tk
 import time
 import queue
+import Animation
 
 class GUI():
     
@@ -55,11 +56,14 @@ class GUI():
         self.q.put('head')
 
     def go(self):
+        a = Animation.Animation()
+        a.update(0)
         while not self.q.empty():
             current = self.q.get()
             if current == 'head':
                 self.moveHead()
                 time.sleep(2)
+        a.stop()
  
     def run(self):
         self.win.title("It's just a drill")
