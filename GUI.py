@@ -92,6 +92,9 @@ class GUI():
     def go(self):
         self.actions.append(['end', '', 0])
         # create a place for kirby animation
+        self.top = tk.Toplevel()
+        a = Animation.Animation(self.top)
+        a.update(0)
         while len(self.actions) > 0:
             current = self.actions[0][0]
             direction = self.actions[0][1]
@@ -103,12 +106,12 @@ class GUI():
                 self.moveBody(direction, duration)
             elif current == 'wheels':
                 self.moveWheels(direction, duration)
-            elif current == 'animation':
-                self.top = tk.Toplevel()
-                a = Animation.Animation(self.top)
-                a.update(0)
+            #elif current == 'animation':
+            #    self.top = tk.Toplevel()
+            #    a = Animation.Animation(self.top)
+            #    a.update(0)
             time.sleep(float(duration))
-
+                
         self.clear()
 
                 
