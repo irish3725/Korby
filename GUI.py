@@ -35,9 +35,7 @@ class GUI():
         self.Korb.reset()
  
     def moveBody(self, direction, duration):
-        print('moving body')
         if direction == 'right': #right
-            print('moving body right')
             self.Korb.moveBody(4500)
             time.sleep(float(duration))
             self.center()
@@ -47,7 +45,6 @@ class GUI():
             self.center() 
         
     def moveHead(self, direction, duration): 
-        print('moving head')
         if direction == 'up': #up
             self.Korb.nodHead(7000)
             time.sleep(float(duration))
@@ -66,7 +63,6 @@ class GUI():
             self.center() 
     
     def moveWheels(self, direction, duration):
-        print('moving wheels')
         if direction == 'go forward': #forward 
             self.Korb.moveWheels(5000)
             time.sleep(float(duration))
@@ -85,7 +81,7 @@ class GUI():
             self.center()
 
     def add(self, name):
-        if len(self.actions) < 0: 
+        if len(self.actions) < 11: 
             if (name == 'head' and self.direction != 'go forward' and self.direction != 'go back') or (name == 'wheels' and self.direction != 'up' and self.direction != 'down') or (name == 'body' and (self.direction == 'right' or self.direction == 'left')): 
 
                 action = [name, self.direction, self.Spin.get()]
@@ -119,7 +115,6 @@ class GUI():
     def clear(self):
         self.actions.clear()
         self.aButtons.reset()
-        print('clearing')
 
     def set_direction(self, direction):
         self.direction=direction

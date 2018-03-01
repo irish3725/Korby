@@ -30,7 +30,6 @@ class Actions:
             cl = (len(self.buttons) - 1) % 5 
             rw = int((len(self.buttons) - 1) / 5) + 6
             # draw button in row 6 at index index
-            print('drawing new button at,', cl, ',', rw)
             button.grid(column=cl, row=rw, pady=3, padx=10)
 
 
@@ -44,7 +43,6 @@ class Actions:
     
     ## deletes a single button
     def delButton(self, index):
-        print('index in delButton =', index)
         index = len(self.buttons) - 1
         # clear the screen of buttons
         self.clear()
@@ -67,7 +65,6 @@ class Actions:
     def clear(self):
         # for all buttons in list
         for button in self.buttons:
-            print('remove button', button)
             # remove button from screen
             button.destroy()
 
