@@ -48,8 +48,14 @@ class Korby():
         if position > 3000:
             self.x.setTarget(0, position - change)    
 
-    def moveHead(self, position):
+    def moveBody(self, position):
+        print('body at Korb position is', position)
+        self.x.setTarget(0, position)    
+
+    def nodHead(self, position):
         self.x.setTarget(4, position)
+        
+    def turnHead(self, position):
         self.x.setTarget(3, position)
 
     ## move head to the right a little
@@ -81,8 +87,10 @@ class Korby():
             self.x.setTarget(4, position - change)
 
     def moveWheels(self, speed):
-        print('moving wheels')
         self.x.setTarget(1, speed)
+
+    def turnWheels(self, speed):
+        self.x.setTarget(2, speed)
 
     ## change wheels to move forward faster
     def moveForward(self, key):

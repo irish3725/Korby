@@ -26,7 +26,8 @@ class Animation():
             self.root.after(100, self.update, ind)
             
     def stop(self):
-            sys.exit()
+            self.root.destroy()
+            #self.label.destroy()
 
     def run(self):
         print('running animation')
