@@ -5,8 +5,8 @@ import sys
 
 class Animation():
 
-    def __init__(self):
-        self.root = Toplevel()
+    def __init__(self, top):
+        self.root = top
         self.frames = [PhotoImage(file='kirbywalk.gif',format = 'gif -index %i' %(i)) for i in range(10)]
         self.frame = self.frames[0]
         self.label = Label(self.root)
@@ -32,8 +32,9 @@ class Animation():
         print('running animation')
         self.root.after(0, self.update, 0)
         self.root.mainloop()
+    
 
 if __name__ == '__main__':           
-    a = Animation()
+    root = Tk()
+    a = Animation(root)
     a.run()
-
