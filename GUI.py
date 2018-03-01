@@ -1,4 +1,5 @@
-#!/usr/bin/python3 import sys
+#!/usr/bin/python3
+
 import Korby
 import tkinter as tk
 from tkinter.font import Font
@@ -126,43 +127,43 @@ class GUI():
         # button to move body
         bodyButton = tk.Button(self.win, height="4", width="7", text="Body", command=lambda: self.add('body'))
         bodyButton.grid(column=0, row=0, pady=5, padx=10)
-        self.bRightRadio = tk.Radiobutton(self.win, text="right", variable=self.radio, value=4, command=lambda: self.set_direction('right'))
+        self.bRightRadio = tk.Radiobutton(self.win, height="2",text="right", variable=self.radio, value=4, command=lambda: self.set_direction('right'))
         self.bRightRadio.grid(column=0, row=1, pady=0, padx=10)
-        self.bLeftRadio = tk.Radiobutton(self.win, text="left", variable=self.radio, value=5,command=lambda: self.set_direction('left'))
+        self.bLeftRadio = tk.Radiobutton(self.win, height="2", text="left", variable=self.radio, value=5,command=lambda: self.set_direction('left'))
         self.bLeftRadio.grid(column=0, row=2, pady=0, padx=10)
 
         
         # button to nod head 
         nodButton = tk.Button(self.win, height="4", width="7", text="Head Nod", command=lambda: self.add('head'))
         nodButton.grid(column=1, row=0, pady=5, padx=10) 
-        self.upRadio = tk.Radiobutton(self.win, text="up", variable=self.radio, value=0, command=lambda: self.set_direction('up'))
+        self.upRadio = tk.Radiobutton(self.win, height="2", text="up", variable=self.radio, value=0, command=lambda: self.set_direction('up'))
         self.upRadio.grid(column=1, row=1, pady=0, padx=10)
-        self.downRadio = tk.Radiobutton(self.win, text="down", variable=self.radio, value=1, command=lambda: self.set_direction('down'))
+        self.downRadio = tk.Radiobutton(self.win, height="2", text="down", variable=self.radio, value=1, command=lambda: self.set_direction('down'))
         self.downRadio.grid(column=1, row=2, pady=0, padx=10)
   
         # button to shake head 
         shakeButton = tk.Button(self.win, height="4", width="7", text="Head Shake", command=lambda: self.add('head'))
         shakeButton.grid(column=2, row=0, pady=0, padx=10) 
-        self.rightRadio = tk.Radiobutton(self.win, text="right", variable=self.radio, value=6, command=lambda: self.set_direction('right'))
+        self.rightRadio = tk.Radiobutton(self.win, height="2", text="right", variable=self.radio, value=6, command=lambda: self.set_direction('right'))
         self.rightRadio.grid(column=2, row=1, pady=5, padx=10)
-        self.leftRadio = tk.Radiobutton(self.win, text="left", variable=self.radio, value=7, command=lambda: self.set_direction('left'))
+        self.leftRadio = tk.Radiobutton(self.win, height="2", text="left", variable=self.radio, value=7, command=lambda: self.set_direction('left'))
         self.leftRadio.grid(column=2, row=2, pady=0, padx=10)
 
         # button to move wheels
         wheelsButton = tk.Button(self.win, height="4", width="7", text="Wheels", command=lambda: self.add('wheels'))
         wheelsButton.grid(column=3, row=0, pady=5, padx=10) 
-        self.forwardRadio = tk.Radiobutton(self.win, text="forward", variable=self.radio, value=8, command=lambda: self.set_direction('go forward'))
+        self.forwardRadio = tk.Radiobutton(self.win, height="2", text="forward", variable=self.radio, value=8, command=lambda: self.set_direction('go forward'))
         self.forwardRadio.grid(column=3, row=1, pady=0, padx=10)
-        self.backRadio = tk.Radiobutton(self.win, text="backward", variable=self.radio, value=9, command=lambda: self.set_direction('go back'))
+        self.backRadio = tk.Radiobutton(self.win, height="2", text="backward", variable=self.radio, value=9, command=lambda: self.set_direction('go back'))
         self.backRadio.grid(column=3, row=2, pady=0, padx=10)
 
 
         # button to turn wheels
         turnButton = tk.Button(self.win, height="4", width="7", text="Turn", command=lambda: self.add('wheels'))
         turnButton.grid(column=4, row=0, pady=5, padx=10) 
-        self.tRightRadio = tk.Radiobutton(self.win, text="right", variable=self.radio, value=10, command=lambda: self.set_direction('right'))
+        self.tRightRadio = tk.Radiobutton(self.win, height="2", text="right", variable=self.radio, value=10, command=lambda: self.set_direction('right'))
         self.tRightRadio.grid(column=4, row=1, pady=0, padx=10)
-        self.tLeftRadio = tk.Radiobutton(self.win, text="left", variable=self.radio, value=11, command=lambda: self.set_direction('left'))
+        self.tLeftRadio = tk.Radiobutton(self.win, height="2", text="left", variable=self.radio, value=11, command=lambda: self.set_direction('left'))
         self.tLeftRadio.grid(column=4, row=2, pady=0, padx=10)
 
 
