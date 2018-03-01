@@ -16,7 +16,7 @@ class GUI():
         # list of actions for actual movement
         self.actions = [['animation', '', 0]]
         # actual action buttons for placing on the screen
-        self.aButtons = actions.Actions(self.win)
+        self.aButtons = actions.Actions(self.win, self)
         # create Korby object for moving robot
         self.Korb = Korby.Korby(self.win)
         # load background image
@@ -75,20 +75,22 @@ class GUI():
             self.Korb.moveWheels(7000)
             time.sleep(float(duration))
             self.center()
-        elif direction == 'turn right': #right
+        elif direction == 'right': #right
             self.Korb.turnWheels(5000)
             time.sleep(float(duration))
             self.center()
-        elif direction == 'turn left': #left 
+        elif direction == 'left': #left 
             self.Korb.turnWheels(7000)
             time.sleep(float(duration))
             self.center()
 
     def add(self, name):
-        if len(self.actions) < 12: 
-            action = [name, self.direction, self.Spin.get()]
-            self.actions.append(action)
-            self.aButtons.addButton(action)
+        if len(self.actions) < 0: 
+            if (name == 'head' and self.direction != 'go forward' and self.direction != 'go back') or (name == 'wheels' and self.direction != 'up' and self.direction != 'down') or (name == 'body' and (self.direction == 'right' or self.direction == 'left')): 
+
+                action = [name, self.direction, self.Spin.get()]
+                self.actions.append(action)
+                self.aButtons.addButton(action)
 
     def go(self):
         self.actions.append(['end', '', 0])
@@ -98,7 +100,6 @@ class GUI():
             direction = self.actions[0][1]
             duration = self.actions[0][2]
             self.actions.pop(0)
-            self.aButtons.delButton(0)
             if current == 'head':
                 self.moveHead(direction, duration)
             elif current == 'body':
@@ -109,13 +110,15 @@ class GUI():
                 self.top = tk.Toplevel()
                 a = Animation.Animation(self.top)
                 a.update(0)
+            time.sleep(float(duration))
+
+        self.clear()
 
                 
-            time.sleep(float(duration))
 
     def clear(self):
         self.actions.clear()
-        self.aButtons.clear()
+        self.aButtons.reset()
         print('clearing')
 
     def set_direction(self, direction):
@@ -162,9 +165,9 @@ class GUI():
         # button to turn wheels
         turnButton = tk.Button(self.win, height="4", width="7", text="Turn", command=lambda: self.add('wheels'))
         turnButton.grid(column=4, row=0, pady=5, padx=10) 
-        self.tRightRadio = tk.Radiobutton(self.win, text="right", variable=self.radio, value=10, command=lambda: self.set_direction('turn right'))
+        self.tRightRadio = tk.Radiobutton(self.win, text="right", variable=self.radio, value=10, command=lambda: self.set_direction('right'))
         self.tRightRadio.grid(column=4, row=1, pady=0, padx=10)
-        self.tLeftRadio = tk.Radiobutton(self.win, text="left", variable=self.radio, value=11, command=lambda: self.set_direction('turn left'))
+        self.tLeftRadio = tk.Radiobutton(self.win, text="left", variable=self.radio, value=11, command=lambda: self.set_direction('left'))
         self.tLeftRadio.grid(column=4, row=2, pady=0, padx=10)
 
 

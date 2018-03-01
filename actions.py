@@ -5,9 +5,11 @@ import GUI
 
 class Actions:
 
-    def __init__(self, win):
+    def __init__(self, win, gui):
         # get main tk window
         self.win = win
+        # get gui to delete commands
+        self.gui = gui
         # list of buttons to be displayed
         self.buttons = []
         # list of commands
@@ -25,16 +27,15 @@ class Actions:
             # add button to list of buttons
             self.buttons.append(button)
             # get the index of that button for drawing at coordinate
-            cl = (len(self.buttons) - 1) % 6
-            rw = int((len(self.buttons) - 1) / 6) + 6
+            cl = (len(self.buttons) - 1) % 5 
+            rw = int((len(self.buttons) - 1) / 5) + 6
             # draw button in row 6 at index index
             print('drawing new button at,', cl, ',', rw)
             button.grid(column=cl, row=rw, pady=3, padx=10)
 
 
     ## adds a single button
-    def addButton(self, entry):
-        # clear screen of buttons
+    def addButton(self, entry): # clear screen of buttons
         self.clear()
         # append the new command to the list of commands
         self.commands.append(entry)
@@ -44,11 +45,12 @@ class Actions:
     ## deletes a single button
     def delButton(self, index):
         print('index in delButton =', index)
-        index = len(self.buttons)
+        index = len(self.buttons) - 1
         # clear the screen of buttons
         self.clear()
         # remove button from list of buttons
         self.commands.pop(index)
+        self.gui.actions.pop(index)
         # draw all buttons on screen
         self.reDraw()
 
