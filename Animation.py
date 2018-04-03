@@ -12,7 +12,7 @@ class Animation():
         self.label = Label(self.root)
         self.label.pack()
 
-    def update(self, ind):
+    def update(self, ind=0):
         if ind < 10:
             self.frame = self.frames[ind]
             ind += 1

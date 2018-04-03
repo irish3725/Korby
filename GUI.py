@@ -8,6 +8,8 @@ import queue
 import Animation
 import actions
 import sys
+import threading
+import sock_con
 
 class GUI():
     
@@ -15,7 +17,8 @@ class GUI():
         # create widow
         self.win = tk.Tk()
         # list of actions for actual movement
-        self.actions = [['animation', '', 0]]
+#        self.actions = [['animation', '', 0]]
+        self.actions = []
         # actual action buttons for placing on the screen
         self.aButtons = actions.Actions(self.win, self)
         # create Korby object for moving robot
@@ -73,7 +76,7 @@ class GUI():
             time.sleep(float(duration))
             self.center()
         elif direction == 'right': #right
-            self.Korb.turnWheels(5000)
+            self.Korb.turnWheels(5100)
             time.sleep(float(duration))
             self.center()
         elif direction == 'left': #left 
@@ -81,22 +84,30 @@ class GUI():
             time.sleep(float(duration))
             self.center()
 
-    def add(self, name):
+    def add(self, name, direction=-1, time=-1):
         if len(self.actions) < 11: 
-            if (name == 'head' and self.direction != 'go forward' and self.direction != 'go back') or (name == 'wheels' and self.direction != 'up' and self.direction != 'down') or (name == 'body' and (self.direction == 'right' or self.direction == 'left')): 
+            # if no input for direction or time
+            if direction == -1 and time == -1:
+                if (name == 'head' and self.direction != 'go forward' and self.direction != 'go back') or (name == 'wheels' and self.direction != 'up' and self.direction != 'down') or (name == 'body' and (self.direction == 'right' or self.direction == 'left')): 
 
-                action = [name, self.direction, self.Spin.get()]
-                self.actions.append(action)
-                self.aButtons.addButton(action)
+                    action = [name, self.direction, self.Spin.get()]
+            else:
+                action = [name, direction, time]
+
+            # add button to screen
+            self.actions.append(action)
+            self.aButtons.addButton(action)
 
     def go(self):
         self.actions.append(['end', '', 0])
         # create a place for kirby animation
         self.top = tk.Toplevel()
         a = Animation.Animation(self.top)
+#        thread = threading.Thread(name='animate', target=a.update)
         a.update(0)
         while len(self.actions) > 0:
             current = self.actions[0][0]
+            print('current =', current)
             direction = self.actions[0][1]
             duration = self.actions[0][2]
             self.actions.pop(0)
@@ -200,7 +211,21 @@ class GUI():
 if __name__ == '__main__':
 
     gui = GUI()
-    gui.run() 
+    server = sock_con.sock_con(gui)
 
+    gui.run()
 
+    # create list of threads
+    threads = []
+
+    # create server thread
+    threads.append(threading.Thread(name='tcp_server', target=server.listen))
+
+    # start all threads
+    for thread in threads:
+        thread.start()
+
+    # join all threads
+    for thread in threads:
+        thread.join()
 
