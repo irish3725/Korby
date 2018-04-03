@@ -88,6 +88,7 @@ class GUI():
         if len(self.actions) < 11: 
             # if no input for direction or time
             if direction == -1 and time == -1:
+                #!!!! WARNING: Don't look directly at the below if statement !!!!#
                 if (name == 'head' and self.direction != 'go forward' and self.direction != 'go back') or (name == 'wheels' and self.direction != 'up' and self.direction != 'down') or (name == 'body' and (self.direction == 'right' or self.direction == 'left')): 
 
                     action = [name, self.direction, self.Spin.get()]

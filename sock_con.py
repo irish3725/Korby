@@ -18,7 +18,6 @@ class sock_con:
     ## listen to (3) new connections
     ## @param port - port number for listening connection
     def listen(self, port=5000):
-        # listen for 4 connections
         self.sock.listen(3)
    
         # if given a new port, change it 
@@ -27,7 +26,8 @@ class sock_con:
         # get connection and address of sender
         conn, addr = self.sock.accept()
         print('New connection from:', addr)
-#        data = ''
+        data = ''
+
         while data != 'end' and data != 'start':    
             # get message contents
             data = conn.recv(1024).decode()
