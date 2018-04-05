@@ -10,17 +10,19 @@ class sock_con:
         # get hostname for listening for connection
         #self.host = "10.200.5.223"
         self.host = socket.gethostname() 
+        #self.host = "127.0.0.1"
         # get port for listening for new connections
         self.port = 5000
         # create new socket on port and bind
         self.sock = socket.socket()
-        print('binding to host:', self.host, 'on port', self.port)
-        self.sock.bind((self.host, self.port))
-        print(self.host)
 
     ## listen to (3) new connections
     ## @param port - port number for listening connection
     def listen(self, port=5000):
+        print('binding to host:', self.host, 'on port', self.port)
+        self.sock.bind((self.host, self.port))
+        print(self.host)
+
         self.sock.listen(3)
    
         # if given a new port, change it 
@@ -29,38 +31,44 @@ class sock_con:
         # get connection and address of sender
         conn, addr = self.sock.accept()
         print('New connection from:', addr)
+#        data = conn.recv(1024).decode()
         data = ''
 
         while data != 'end' and data != 'start':    
             # get message contents
             data = conn.recv(1024).decode()
-            print(addr, 'says:\n', data, '\n')
-            data = data.split()
-        
-            for word in data:
-                print('word:', word)
-                
-            # speech syntax
-            # start (run go function)
-            # move forward for three seconds (move wheels forward for 3 seconds)
-            # move back for three seconds (move wheels forward for 3 seconds)
-            # turn head left for three seconds (turn head for three seconds)
-            # turn body left for three seconds
-            if word[0] == 'start':
-                gui.go()
-                done = True
-            # if for moving robot forward
-            elif word[0] == 'move' and word[1] == 'forward':
-                time = self.get_number(word[3])
-                gui.add('wheels', 'go forward', time)
-            # if for moving robot back
-            elif word[0] == 'move' and (word[1] == 'back' or word[1] == 'backward'):
-                time = self.get_number(word[3])
-                gui.add('wheels', 'go back', time)
-            # if for turning head/body
-            elif word[0] == 'turn':
-                time = self.get_number(word[3])
-                gui.add(word[1], word[2], time)
+            if data != '':
+                #data = conn.recv(1024).decode()
+                #print('received message:', data)
+                print(addr, 'says:\n', data, '\n')
+                words = data.split()
+            
+                for word in words:
+                    print('word:', word)
+
+                    
+                # speech syntax
+                # start (run go function)
+                # move forward for three seconds (move wheels forward for 3 seconds)
+                # move back for three seconds (move wheels forward for 3 seconds)
+                # turn head left for three seconds (turn head for three seconds)
+                # turn body left for three seconds
+                if len(words) > 0:
+                    if words[0] == 'start':
+                        gui.go()
+                        done = True
+                    # if for moving robot forward
+                    elif words[0] == 'move' and words[1] == 'forward':
+                        time = self.get_number(words[3])
+                        gui.add('wheels', 'go forward', time)
+                    # if for moving robot back
+                    elif words[0] == 'move' and (words[1] == 'back' or words[1] == 'backward'):
+                        time = self.get_number(words[3])
+                        gui.add('wheels', 'go back', time)
+                    # if for turning head/body
+                    elif words[0] == 'turn':
+                        time = self.get_number(word[3])
+                        gui.add(words[1], words[2], time)
 
 
     ## turn word number to number
@@ -82,6 +90,10 @@ class sock_con:
     ## @param addr - ip address of new host
     ## @param c_port - port of new host
     def connect(self, host, c_port=5000):
+        self.port = 5001
+        print('binding to host:', self.host, 'on port', self.port)
+        self.sock.bind((self.host, self.port))
+        print(self.host)
         # create new socket and connect to host on that socket
         sock = socket.socket()
         sock.connect((host, c_port))
