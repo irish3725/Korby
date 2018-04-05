@@ -105,15 +105,15 @@ class sock_con:
     def get_number(self, number):
         if number == 'one':
             number = 1
-        elif number == 'two':
+        elif number == 'two' or number == '2':
             number = 2 
-        elif number == 'three':
+        elif number == 'three' or number == '3':
             number = 3 
-        elif number == 'four':
+        elif number == 'four' or number == '4':
             number = 4
-        elif number == 'five':
+        elif number == 'five' or number == '5':
             number = 5
-        elif number == 'six':
+        elif number == 'six' or number == '6':
             number = 6
         else:
             return ''
