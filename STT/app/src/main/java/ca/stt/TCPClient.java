@@ -1,9 +1,11 @@
 package ca.stt;
 
+import android.os.AsyncTask;
+
 import java.io.*;
 import java.net.*;
 
-public class TCPClient {
+public class TCPClient extends AsyncTask<Void, Void, Void> {
 
     String ip;
     int port;
@@ -26,6 +28,17 @@ public class TCPClient {
         System.out.println("entered tcp client constructor");
         this.ip = ip;
         this.port = port;
+
+    }
+
+    public void sendMessage(String message){
+        this.message = message;
+        this.send = true;
+    }
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+        // try for creating connection
         try {
             // client vairables
             // string input
@@ -42,40 +55,32 @@ public class TCPClient {
             e.printStackTrace();
         }
 
-    }
 
-    public void sendMessage(String message) {
-        this.message = message;
-        this.send = true;
-        System.out.println("running send message");
+        // poll continueously
+        while(this.poll){
+            // if i want to send something
+            if(this.send){
+                System.out.println("running send message");
 
-        System.out.println("Sending message: " + this.message);
-        // send message to other server
+                System.out.println("Sending message: " + this.message);
+                // send message to other server
 
-        try {
-            this.outToServer.writeBytes(this.message + '\n');
-            // get reply from server
-            this.reply = this.inFromServer.readLine();
-            System.out.println("FROM SERVER: " + this.reply);
-            this.send = false;
-        } catch (IOException e) {
-            e.printStackTrace();
+                try {
+                    this.outToServer.writeBytes(this.message + '\n');
+                    // get reply from server
+                    this.reply = this.inFromServer.readLine();
+                    System.out.println("FROM SERVER: " + this.reply);
+                    this.send = false;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+        return null;
     }
 
-    public void stopPolling() throws IOException {
-        this.poll = false;
-        this.clientSocket.close();
+    @Override
+    protected void onPostExecute(Void result){
+        System.out.println("finished network");
     }
-
-    public void run(){
-    }
-
-//    public void start(){
-//        System.out.println("Starting tcp client thread");
-//        if(t == null){
-//            t = new Thread(this, "client");
-//            t.start();
-//        }
-//    }
 }

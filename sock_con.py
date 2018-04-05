@@ -87,6 +87,7 @@ class sock_con:
                             direction = ''
                             time = ''
 
+        print("closing connection")
         # safely shutdown and close sockets
         sock.shutdown(socket.SHUT_RDWR)
         sock.close()

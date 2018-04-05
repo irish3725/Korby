@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     // tcp client
     private TCPClient client = new TCPClient("10.200.5.223", 5000);
+//    private TCPClient client = new TCPClient("10.200.1.119", 5000);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // send message with tcp client
                     System.out.println("right before send message: " + message);
+                    this.client.execute();
                     this.client.sendMessage(message);
                 }
                 break;
