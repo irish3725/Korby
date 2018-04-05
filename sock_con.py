@@ -1,4 +1,5 @@
 
+import time
 import socket
 import sys
 
@@ -16,6 +17,9 @@ class sock_con:
         # create new socket on port and bind
         self.sock = socket.socket()
 
+        self.send = True
+        self.message = 'reply from server'
+
     ## listen to (3) new connections
     ## @param port - port number for listening connection
     def listen(self, port=5000):
@@ -29,14 +33,19 @@ class sock_con:
         self.port = port
     
         # get connection and address of sender
-        conn, addr = self.sock.accept()
-        print('New connection from:', addr)
 #        data = conn.recv(1024).decode()
         data = ''
 
-        while data != 'end' and data != 'start':    
+        while data != 'end':    
+            conn, addr = self.sock.accept()
+            print('New connection from:', addr)
             # get message contents
             data = conn.recv(1024).decode()
+
+            if self.send:
+                conn.send(self.message.encode())
+                self.send = False
+
             if data != '':
                 #data = conn.recv(1024).decode()
                 #print('received message:', data)
@@ -96,15 +105,15 @@ class sock_con:
     def get_number(self, number):
         if number == 'one':
             number = 1
-        elif number == 'two':
+        elif number == 'two' or number == '2':
             number = 2 
-        elif number == 'three':
+        elif number == 'three' or number == '3':
             number = 3 
-        elif number == 'four':
+        elif number == 'four' or number == '4':
             number = 4
-        elif number == 'five':
+        elif number == 'five' or number == '5':
             number = 5
-        elif number == 'six':
+        elif number == 'six' or number == '6':
             number = 6
         else:
             return ''
@@ -130,6 +139,7 @@ class sock_con:
         message = ' move head up for one second'
         sock.send(message.encode())
         message = ' move body left for one second'
+        time.sleep(5)
         sock.send(message.encode())
         message = ' move body right for one second'
         sock.send(message.encode())
@@ -137,8 +147,8 @@ class sock_con:
         sock.send(message.encode())
 
         # safely shutdown and close sockets
-        sock.shutdown(socket.SHUT_RDWR)
-        sock.close()
+        #sock.shutdown(socket.SHUT_RDWR)
+        #sock.close()
 
 if __name__ == '__main__':
     con = sock_con()
