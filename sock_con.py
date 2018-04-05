@@ -99,7 +99,8 @@ class sock_con:
         sock.connect((host, c_port))
 
         # send on message to that host
-        message = 'I smell like beef...'
+#        message = 'I smell like beef...'
+        message = 'start'
         sock.send(message.encode())
 
         # safely shutdown and close sockets
