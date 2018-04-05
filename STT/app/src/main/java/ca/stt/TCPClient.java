@@ -27,17 +27,18 @@ public class TCPClient {
         this.ip = ip;
         this.port = port;
         try {
-        // client vairables
-        // string input
-        this.inFromUser = new BufferedReader(new InputStreamReader(System.in));
-        // initiate client socket
-        this.clientSocket = new Socket(this.ip, this.port);
-        // for sending data to server
-        this.outToServer = new DataOutputStream(clientSocket.getOutputStream());
-        // for receiving reply from server
-        this.inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            // client vairables
+            // string input
+            this.inFromUser = new BufferedReader(new InputStreamReader(System.in));
+            // initiate client socket
+            this.clientSocket = new Socket(this.ip, this.port);
+            // for sending data to server
+            this.outToServer = new DataOutputStream(clientSocket.getOutputStream());
+            // for receiving reply from server
+            this.inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            System.out.println("connected to host: " + this.ip + " on port: " + this.port);
         } catch (IOException e) {
-            System.out.println("unable to connect to server");
+            System.out.println("\n\nunable to connect to server\n\n");
             e.printStackTrace();
         }
 

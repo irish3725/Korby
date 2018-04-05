@@ -124,7 +124,9 @@ class GUI():
             #    a.update(0)
             time.sleep(float(duration))
                 
+        a.stop()
         self.clear()
+        return
 
                 
 
@@ -220,7 +222,6 @@ if __name__ == '__main__':
     # create list of threads
     threads = []
 
-    print("appending thread")
     # create server thread
     threads.append(threading.Thread(name='tcp_server', target=server.listen))
 
