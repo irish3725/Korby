@@ -136,6 +136,7 @@ class GUI():
         self.direction=direction
  
     def run(self):
+        print('starting run method for Korby')
         self.win.title("Go Korby!") 
         self.win.geometry("800x500")
 
@@ -211,20 +212,24 @@ class GUI():
 
 if __name__ == '__main__':
 
+    print("started main")
+
     gui = GUI()
     server = sock_con.sock_con(gui)
-
-    gui.run()
 
     # create list of threads
     threads = []
 
+    print("appending thread")
     # create server thread
     threads.append(threading.Thread(name='tcp_server', target=server.listen))
 
     # start all threads
     for thread in threads:
+        print("starting thread", thread.name)
         thread.start()
+
+    gui.run()
 
     # join all threads
     for thread in threads:

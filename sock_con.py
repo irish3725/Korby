@@ -8,8 +8,8 @@ class sock_con:
         # gui object for accessing things for the robot
         self.gui = gui
         # get hostname for listening for connection
-        #self.host = "10.200.5.223"
-        self.host = socket.gethostname() 
+        self.host = "10.200.5.223"
+        #self.host = socket.gethostname() 
         #self.host = "127.0.0.1"
         # get port for listening for new connections
         self.port = 5000
@@ -55,20 +55,20 @@ class sock_con:
                 # turn body left for three seconds
                 if len(words) > 0:
                     if words[0] == 'start':
-                        gui.go()
+                        self.gui.go()
                         done = True
                     # if for moving robot forward
                     elif words[0] == 'move' and words[1] == 'forward':
                         time = self.get_number(words[3])
-                        gui.add('wheels', 'go forward', time)
+                        self.gui.add('wheels', 'go forward', time)
                     # if for moving robot back
                     elif words[0] == 'move' and (words[1] == 'back' or words[1] == 'backward'):
                         time = self.get_number(words[3])
-                        gui.add('wheels', 'go back', time)
+                        self.gui.add('wheels', 'go back', time)
                     # if for turning head/body
                     elif words[0] == 'turn':
                         time = self.get_number(word[3])
-                        gui.add(words[1], words[2], time)
+                        self.gui.add(words[1], words[2], time)
 
 
     ## turn word number to number
