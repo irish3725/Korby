@@ -43,8 +43,6 @@ class sock_con:
                 print(addr, 'says:\n', data, '\n')
                 words = data.split()
             
-
-                   
                 part = ''
                 direction = ''
                 time = ''
