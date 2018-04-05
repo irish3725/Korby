@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView speakButton;
     private final int REQ_CODE_SPEECH_INPUT = 100;
 
+    private boolean first = true;
+
     // tcp client
     private TCPClient client = new TCPClient("10.200.5.223", 5000);
 //    private TCPClient client = new TCPClient("10.200.1.119", 5000);
@@ -96,6 +98,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Receiving speech input
+    private void sendMessage(String message){
+        if(this.first) {
+            this.client.execute();
+            this.first = false;
+        }
+        this.client.sendMessage(message);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -114,8 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // send message with tcp client
                     System.out.println("right before send message: " + message);
-                    this.client.execute();
-                    this.client.sendMessage(message);
+                    this.sendMessage(message);
                 }
                 break;
             }

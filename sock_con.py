@@ -34,7 +34,7 @@ class sock_con:
 #        data = conn.recv(1024).decode()
         data = ''
 
-        while data != 'end' and data != 'start':    
+        while data != 'end':    
             # get message contents
             data = conn.recv(1024).decode()
             if data != '':
@@ -137,8 +137,8 @@ class sock_con:
         sock.send(message.encode())
 
         # safely shutdown and close sockets
-        sock.shutdown(socket.SHUT_RDWR)
-        sock.close()
+        #sock.shutdown(socket.SHUT_RDWR)
+        #sock.close()
 
 if __name__ == '__main__':
     con = sock_con()
