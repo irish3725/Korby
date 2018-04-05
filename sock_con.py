@@ -59,32 +59,33 @@ class sock_con:
 
                     time = self.get_number(word)
 
-                    if word == 'start':
-                        self.gui.go()
-                    elif word == 'forward':
-                        direction = 'go forward'
+                    if self.gui:
+                        if word == 'start':
+                            self.gui.go()
+                        elif word == 'forward':
+                            direction = 'go forward'
 
-                    # if for moving robot back
-                    elif word == 'back' or word == 'backward':
-                        direction = 'go back'
+                        # if for moving robot back
+                        elif word == 'back' or word == 'backward':
+                            direction = 'go back'
 
-                    # if for turning head/body
-                    elif word == 'left' or word == 'right' or word == 'up' or word == 'down':
-                        direction = word
+                        # if for turning head/body
+                        elif word == 'left' or word == 'right' or word == 'up' or word == 'down':
+                            direction = word
 
-                    elif word == 'head' or word == 'body' or word == 'wheels':
-                        part = word
+                        elif word == 'head' or word == 'body' or word == 'wheels':
+                            part = word
 
-                    elif word == 'move' or word == 'go' or word == 'turn':
-                        part = 'wheels'
-                    else:
-                        print('didn\'t recognize word', word)
+                        elif word == 'move' or word == 'go' or word == 'turn':
+                            part = 'wheels'
+                        else:
+                            print('didn\'t recognize word', word)
 
-                    if part != '' and direction != '' and time != '':
-                        self.gui.add(part, direction, time)
-                        part = ''
-                        direction = ''
-                        time = ''
+                        if part != '' and direction != '' and time != '':
+                            self.gui.add(part, direction, time)
+                            part = ''
+                            direction = ''
+                            time = ''
 
         # safely shutdown and close sockets
         sock.shutdown(socket.SHUT_RDWR)
