@@ -8,12 +8,15 @@ class sock_con:
         # gui object for accessing things for the robot
         self.gui = gui
         # get hostname for listening for connection
-        self.host = socket.gethostname()
+        #self.host = "10.200.5.223"
+        self.host = socket.gethostname() 
         # get port for listening for new connections
         self.port = 5000
         # create new socket on port and bind
         self.sock = socket.socket()
+        print('binding to host:', self.host, 'on port', self.port)
         self.sock.bind((self.host, self.port))
+        print(self.host)
 
     ## listen to (3) new connections
     ## @param port - port number for listening connection
