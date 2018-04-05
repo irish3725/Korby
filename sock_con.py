@@ -46,30 +46,48 @@ class sock_con:
                 for word in words:
                     print('word:', word)
 
-                    
+                   
+                part = ''
+                direction = ''
+                time = ''
                 # speech syntax
                 # start (run go function)
                 # move forward for three seconds (move wheels forward for 3 seconds)
                 # move back for three seconds (move wheels forward for 3 seconds)
                 # turn head left for three seconds (turn head for three seconds)
                 # turn body left for three seconds
-                if len(words) > 0:
-                    if words[0] == 'start':
+                while len(words) > 0:
+                    word = word.pop()
+
+                    time = self.get_number(word)
+
+                    if word == 'start':
                         gui.go()
                         done = True
-                    # if for moving robot forward
-                    elif words[0] == 'move' and words[1] == 'forward':
-                        time = self.get_number(words[3])
-                        gui.add('wheels', 'go forward', time)
-                    # if for moving robot back
-                    elif words[0] == 'move' and (words[1] == 'back' or words[1] == 'backward'):
-                        time = self.get_number(words[3])
-                        gui.add('wheels', 'go back', time)
-                    # if for turning head/body
-                    elif words[0] == 'turn':
-                        time = self.get_number(word[3])
-                        gui.add(words[1], words[2], time)
 
+                    # if for moving robot forward
+                    elif word == 'forward':
+                        direction = 'go forward'
+
+                    # if for moving robot back
+                    elif word == 'back' or word == 'backward':
+                        direction = 'go back'
+
+                    # if for turning head/body
+                    elif word == 'left' or word == 'right' or word == 'up' or word == 'down':
+                        direction = word
+
+                    elif word == 'head' or word == 'body' or word == 'wheels':
+                        part = word
+
+                    elif word == 'move' or word == 'go' or word == 'turn':
+                        part = 'wheels'
+
+                    if part != '' and direction != '' and time != '':
+                        gui.add(part, direction, time)
+                        part = ''
+                        direction = ''
+                        time = ''
 
     ## turn word number to number
     def get_number(number):
@@ -85,6 +103,10 @@ class sock_con:
             number = 5
         elif number == 'six':
             number = 6
+        else:
+            return ''
+
+        return number
 
     ## connect to host 
     ## @param addr - ip address of new host
@@ -100,7 +122,15 @@ class sock_con:
 
         # send on message to that host
 #        message = 'I smell like beef...'
-        message = 'start'
+        message = ' move head left for one second'
+        sock.send(message.encode())
+        message = ' move head up for one second'
+        sock.send(message.encode())
+        message = ' move head right for one second'
+        sock.send(message.encode())
+        message = ' move head down for one second'
+        sock.send(message.encode())
+        message = ' start'
         sock.send(message.encode())
 
         # safely shutdown and close sockets
