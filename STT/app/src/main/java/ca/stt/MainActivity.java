@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 String toSpeak = ed1.getText().toString();
 //                client.run(toSpeak);
                 Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
-                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+//                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
 
@@ -104,6 +104,22 @@ public class MainActivity extends AppCompatActivity {
             this.first = false;
         }
         this.client.sendMessage(message);
+    }
+
+    @Override
+    public void onStop(){
+        if (t1 != null){
+            t1.stop();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy(){
+        if (t1 != null) {
+            t1.shutdown();
+        }
+        super.onDestroy();
     }
 
     @Override
