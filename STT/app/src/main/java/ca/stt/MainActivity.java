@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText ed1;
     private Button b1;
     private TextView voiceInput;
-    private TextView speakButton;
+    public static TextView speakButton;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     String message = " ";
 

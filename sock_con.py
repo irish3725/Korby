@@ -20,6 +20,10 @@ class sock_con:
         self.send = True
         self.message = 'reply from server'
 
+    ## tell client to listen
+    def tell_listen(self):
+        self.sock.sendall('listen\n'.encode())
+
     ## listen to (3) new connections
     ## @param port - port number for listening connection
     def listen(self, port=5000):
