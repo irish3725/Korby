@@ -76,9 +76,6 @@ public class TCPClient extends AsyncTask<Void, Void, Void> {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
-
             }
         }
         return null;

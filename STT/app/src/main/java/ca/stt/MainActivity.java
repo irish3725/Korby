@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView voiceInput;
     private TextView speakButton;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    String message = " ";
 
     private boolean first = true;
 
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 String toSpeak = ed1.getText().toString();
 //                client.run(toSpeak);
                 Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
-//                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
 
@@ -86,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void askSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
                 "Hi, speak something.");
@@ -130,16 +130,19 @@ public class MainActivity extends AppCompatActivity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
 
-                    ArrayList<String> result = data
-                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     voiceInput.setText(result.get(0));
 
-                    String message = result.get(0).toLowerCase();
+                    message += result.get(0).toLowerCase() + " ";
                     System.out.println(message);
-
-                    // send message with tcp client
-                    System.out.println("right before send message: " + message);
-                    this.sendMessage(message);
+                    if (!message.contains("start")) {
+                        askSpeechInput();
+                    } else {
+                        // send message with tcp client
+                        System.out.println("right before send message: " + message);
+                        this.sendMessage(message);
+                        message = " ";
+                    }
                 }
                 break;
             }
