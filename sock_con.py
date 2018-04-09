@@ -24,6 +24,11 @@ class sock_con:
     def tell_listen(self):
         self.sock.sendall('listen\n'.encode())
 
+
+    def listen(self):
+        self.conn.send(bytes("listen\n", "UTF-8"))
+        return
+
     ## listen to (3) new connections
     ## @param port - port number for listening connection
     def listen(self, port=5000):

@@ -23,6 +23,7 @@ public class TCPClient extends AsyncTask<Void, Void, Void> {
     private Socket clientSocket;
     private DataOutputStream outToServer;
     private BufferedReader inFromServer;
+    public String cmd = "";
 
     public TCPClient(String ip, int port) {
         System.out.println("entered tcp client constructor");
@@ -31,7 +32,7 @@ public class TCPClient extends AsyncTask<Void, Void, Void> {
 
     }
 
-    public void sendMessage(String message){
+    public void sendMessage(String message) {
         this.message = message;
         this.send = true;
     }
@@ -40,14 +41,13 @@ public class TCPClient extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
 
 
-
-        // poll continueously
-        while(this.poll){
+        // poll continuously
+        while (this.poll) {
             // if i want to send something
-            if(this.send){
+            if (this.send) {
                 // try for creating connection
                 try {
-                    // client vairables
+                    // client variables
                     // string input
                     this.inFromUser = new BufferedReader(new InputStreamReader(System.in));
                     // initiate client socket
@@ -88,19 +88,21 @@ public class TCPClient extends AsyncTask<Void, Void, Void> {
                 // for receiving reply from server
                 this.inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                while(!this.inFromServer.ready()) {}
+                //cmd = inFromServer.readLine();
+
+                while (!this.inFromServer.ready()) {
+                }
 
                 this.message = inFromServer.readLine();
-
-                if(this.message.equals("listen")){
+                if (this.message.equals("listen")) {
                     MainActivity.speakButton.callOnClick();
                 }
 
-                while(!this.send) {}
+                while (!this.send) {
+                }
 
                 System.out.println("Sending message: " + this.message);
                 // send message to other server
-
                 this.outToServer.writeBytes(this.message + '\n');
 
             } catch (IOException e) {
@@ -108,10 +110,12 @@ public class TCPClient extends AsyncTask<Void, Void, Void> {
             }
 
             return null;
-    }
+        }
 
 //    @Override
 //    protected void onPostExecute(Void result){
 //        System.out.println("finished network");
 //    }
+        return null;
+    }
 }
