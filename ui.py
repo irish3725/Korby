@@ -1,5 +1,5 @@
 
-import game
+import b_game as game
 
 class ui:
 

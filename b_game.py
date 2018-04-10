@@ -9,8 +9,6 @@ class enemy:
         self.name = name
         self.health = health
         self.key = key
-        if self.key:
-            print(self.name, 'got a key')
 
     def getName(self):
         return self.name
@@ -70,11 +68,21 @@ class node:
             self.west.east = self
 
 class player:
-    def __init__(self): 
+    def __init__(self, level=1): 
         self.location = None
         self.health = 100
         self.state = None
         self.key = False
+        self.createLevel(level)
+
+    def createLevel(self, level):
+        if level == 1:
+            home = node()
+            self.setLocation(home)
+            self.location.setPath('south', node(2, 'fight'))
+            self.location.south.setPath('west', node(3, 'chest'))
+            self.location.south.setPath('east', node(4, 'fight', True))
+            self.location.south.setPath('south', node(5, 'recharge'))
 
     def setLocation(self, location):
         self.location = location
@@ -135,9 +143,10 @@ class player:
             # take damage from monster
             self.health -= self.location.enemies[0].attack()
             if self.health < 1:
-                print('Oh dear. You are dead.')
+                m += 'Oh dear. You are dead.\n'
                 self.health = 0
                 self.state = 'dead'
+                self.location.n_type = 'empty'
 
 
         m += 'player health:' + str(self.health) + '\n'
@@ -177,22 +186,20 @@ class player:
         return m
 
     def chest(self):
+        m = ''
         if self.key:
             self.state = 'won'
-            return 'you won!!'
+            m += 'you won!!\n'
+        else:
+            m += 'you need to find the key\n'
 
-        return 'you need to find the key'
+        return m 
 
 if __name__ == '__main__':
-    p = player()
-    home = node()
-    p.setLocation(home)
+    p = player(level=1)
+
     ui = ui.ui(p)
 
-    p.location.setPath('south', node(2, 'fight'))
-    p.location.south.setPath('west', node(3, 'chest'))
-    p.location.south.setPath('east', node(4, 'fight', True))
-    p.location.south.setPath('south', node(5, 'recharge'))
 
     ui.run() 
 
