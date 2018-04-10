@@ -20,6 +20,10 @@ class sock_con:
         self.send = True
         self.message = 'reply from server'
 
+    ## tell client to listen
+    def tell_listen(self):
+        self.sock.sendall('listen\n'.encode())
+
     ## listen to (3) new connections
     ## @param port - port number for listening connection
     def listen(self, port=5000):
@@ -31,12 +35,13 @@ class sock_con:
    
         # if given a new port, change it 
         self.port = port
-    
+
         # get connection and address of sender
-#        data = conn.recv(1024).decode()
+        # data = conn.recv(1024).decode()
         data = ''
 
-        while data != 'end':    
+
+        while data != 'end':
             conn, addr = self.sock.accept()
             print('New connection from:', addr)
             # get message contents

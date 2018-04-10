@@ -12,7 +12,7 @@ import threading
 import sock_con
 
 class GUI():
-    
+
     def __init__(self):
         # create widow
         self.win = tk.Tk()
@@ -33,7 +33,7 @@ class GUI():
         # direction for things
         self.direction = 'up'
         # variable for storing duration
-        self.duration = 1 
+        self.duration = 1
 
     def center(self):
         self.Korb.reset()
@@ -128,8 +128,9 @@ class GUI():
         self.clear()
         return
 
-    def listen(self):
-        return                    
+    def set(self):
+        print('set')
+        server.tell_listen()
 
     def clear(self):
         self.actions.clear()
@@ -200,7 +201,7 @@ class GUI():
         clearButton.grid(column=5, row=4, pady=5, padx=10) 
 
         #button to listen
-        listenButton = tk.Button(self.win, height="2", width="7", text="Listen", command = self.listen)
+        listenButton = tk.Button(self.win, height="2", width="7", text="Listen", command=self.set)
         listenButton.grid(column=5, row=5, pady=5, padx=10)
 
         # button to exit
