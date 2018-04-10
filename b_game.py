@@ -88,7 +88,7 @@ class player:
         self.location = location
 
     def action(self, action, message=True):
-        m = ''
+        m = 'action was ' + action
 
         if self.state == 'dead':
             return 'You can\'t do anything. You\'re dead'
