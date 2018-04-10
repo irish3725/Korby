@@ -5,7 +5,7 @@ class ui:
 
     ## @param cal - calendar object that will be interated with
     def __init__(self, player):
-        self.player = player 
+        self.p = player 
 
     ## main ui loop
     def run(self):  
@@ -13,10 +13,10 @@ class ui:
         val = ''
 
         while val != 'q' and val != 'quit' and val != 'exit':
-            val = input('(w/a/s/d/q) > ').lower()
+            val = input('(w/a/s/d/f/r/q) > ').lower()
 
             # adding an event
-            if val == 'w' or val == 'a' or val == 's' or val == 'd':
-                self.player.action(self.player, val)
+            if val == 'w' or val == 'a' or val == 's' or val == 'd' or val == 'f' or val == 'r':
+                print(self.p.action(val))
                 val = ''
 
