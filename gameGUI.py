@@ -8,6 +8,7 @@ import queue
 import Animation
 import actions
 import sys
+import game
 
 class GUI():
     
@@ -32,6 +33,8 @@ class GUI():
         self.direction = 'up'
         # variable for storing duration
         self.duration = 1 
+
+        self.player = player
 
     def center(self):
         self.Korb.reset()
@@ -140,27 +143,27 @@ class GUI():
 
 
         # NORTH 
-        northButton = tk.Button(self.win, height="4", width="8", text="North", command=lambda: self.run("Heading North."))
+        northButton = tk.Button(self.win, height="4", width="8", text="North", command=lambda: self.player.action(self.player, 'w'))
         northButton.grid(column=2, row=1, pady=5, padx=10) 
   
         # EAST 
-        eastButton = tk.Button(self.win, height="4", width="8", text="East", command=lambda: self.run("Heading East."))
+        eastButton = tk.Button(self.win, height="4", width="8", text="East", command=lambda: self.player.action(self.player, 'd'))
         eastButton.grid(column=3, row=2, pady=5, padx=10) 
 
         # SOUTH
-        southButton = tk.Button(self.win, height="4", width="8", text="South", command=lambda: self.run("Heading South."))
+        southButton = tk.Button(self.win, height="4", width="8", text="South", command=lambda: self.player.action(self.player, 's'))
         southButton.grid(column=2, row=3, pady=5, padx=10) 
 
         # WEST
-        westButton = tk.Button(self.win, height="4", width="8", text="West", command=lambda: self.run("Heading West."))
+        westButton = tk.Button(self.win, height="4", width="8", text="West", command=lambda: self.player.action(self.player, 'a'))
         westButton.grid(column=1, row=2, pady=5, padx=10)
 
         # FIGHT
-        fightButton = tk.Button(self.win, height="4", width="8", text="FIGHT", command=lambda: self.run("You swing your sword, but nothing is there."))
+        fightButton = tk.Button(self.win, height="4", width="8", text="FIGHT", command=lambda: self.player.action(self.player, 'f'))
         fightButton.grid(column=4, row=1, pady=5, padx=10)
         
         # RUN
-        runButton = tk.Button(self.win, height="4", width="8", text="RUN", command=lambda: self.run("You run away from nothing. You coward!!"))
+        runButton = tk.Button(self.win, height="4", width="8", text="RUN", command=lambda: self.player.action(self.player, 'r'))
         runButton.grid(column=4, row=2, pady=5, padx=10)
 
         # TEXT
@@ -185,5 +188,6 @@ if __name__ == '__main__':
 
     print("started main")
 
+    
     gui = GUI()
     gui.run("Welcome to the game. \n Which direction would you like to go?")
