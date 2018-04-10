@@ -23,8 +23,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText ed1;
     private Button b1;
     private TextView voiceInput;
-    private TextView speakButton;
+    public static TextView speakButton;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    String message = " ";
+
+    private boolean first = true;
 
     // tcp client
     private TCPClient client = new TCPClient("10.200.5.223", 5000);
@@ -84,8 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void askSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
                 "Hi, speak something.");
@@ -96,6 +98,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Receiving speech input
+    private void sendMessage(String message){
+        if(this.first) {
+            this.client.execute();
+            this.first = false;
+        }
+        this.client.sendMessage(message);
+    }
+
+    @Override
+    public void onStop(){
+        if (t1 != null){
+            t1.stop();
+        }
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy(){
+        if (t1 != null) {
+            t1.shutdown();
+        }
+        super.onDestroy();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -105,17 +130,19 @@ public class MainActivity extends AppCompatActivity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
 
-                    ArrayList<String> result = data
-                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     voiceInput.setText(result.get(0));
 
-                    String message = result.get(0).toLowerCase();
+                    message += result.get(0).toLowerCase() + " ";
                     System.out.println(message);
-
-                    // send message with tcp client
-                    System.out.println("right before send message: " + message);
-                    this.client.execute();
-                    this.client.sendMessage(message);
+                    if (!message.contains("start")) {
+                        askSpeechInput();
+                    } else {
+                        // send message with tcp client
+                        System.out.println("right before send message: " + message);
+                        this.sendMessage(message);
+                        message = " ";
+                    }
                 }
                 break;
             }

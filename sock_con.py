@@ -1,4 +1,3 @@
-
 import time
 import socket
 import sys
@@ -35,13 +34,12 @@ class sock_con:
    
         # if given a new port, change it 
         self.port = port
-
+    
         # get connection and address of sender
-        # data = conn.recv(1024).decode()
+#        data = conn.recv(1024).decode()
         data = ''
 
-
-        while data != 'end':
+        while data != 'end':    
             conn, addr = self.sock.accept()
             print('New connection from:', addr)
             # get message contents
