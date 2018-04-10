@@ -8,7 +8,7 @@ import queue
 import Animation
 import actions
 import sys
-import game
+from b_game import *
 
 class GUI():
     
@@ -33,8 +33,8 @@ class GUI():
         self.direction = 'up'
         # variable for storing duration
         self.duration = 1 
-
-        self.player = player
+        
+        self.player = player(1)
 
     def center(self):
         self.Korb.reset()
@@ -143,27 +143,27 @@ class GUI():
 
 
         # NORTH 
-        northButton = tk.Button(self.win, height="4", width="8", text="North", command=lambda: self.player.action(self.player, 'w'))
+        northButton = tk.Button(self.win, height="4", width="8", text="North", command=lambda: self.run(self.player.action('w')))
         northButton.grid(column=2, row=1, pady=5, padx=10) 
   
         # EAST 
-        eastButton = tk.Button(self.win, height="4", width="8", text="East", command=lambda: self.player.action(self.player, 'd'))
+        eastButton = tk.Button(self.win, height="4", width="8", text="East", command=lambda: self.run(self.player.action('d')))
         eastButton.grid(column=3, row=2, pady=5, padx=10) 
 
         # SOUTH
-        southButton = tk.Button(self.win, height="4", width="8", text="South", command=lambda: self.player.action(self.player, 's'))
+        southButton = tk.Button(self.win, height="4", width="8", text="South", command=lambda: self.run(self.player.action('s')))
         southButton.grid(column=2, row=3, pady=5, padx=10) 
 
         # WEST
-        westButton = tk.Button(self.win, height="4", width="8", text="West", command=lambda: self.player.action(self.player, 'a'))
+        westButton = tk.Button(self.win, height="4", width="8", text="West", command=lambda: self.run(self.player.action('a')))
         westButton.grid(column=1, row=2, pady=5, padx=10)
 
         # FIGHT
-        fightButton = tk.Button(self.win, height="4", width="8", text="FIGHT", command=lambda: self.player.action(self.player, 'f'))
+        fightButton = tk.Button(self.win, height="4", width="8", text="FIGHT", command=lambda: self.run(self.player.action('f')))
         fightButton.grid(column=4, row=1, pady=5, padx=10)
         
         # RUN
-        runButton = tk.Button(self.win, height="4", width="8", text="RUN", command=lambda: self.player.action(self.player, 'r'))
+        runButton = tk.Button(self.win, height="4", width="8", text="RUN", command=lambda: self.run(self.player.action('r')))
         runButton.grid(column=4, row=2, pady=5, padx=10)
 
         # TEXT
@@ -185,9 +185,5 @@ class GUI():
 
 
 if __name__ == '__main__':
-
-    print("started main")
-
-    
     gui = GUI()
-    gui.run("Welcome to the game. \n Which direction would you like to go?")
+    gui.run("Welcome to the game. \n There is a path to the south. \n Which direction would you like to go?")
