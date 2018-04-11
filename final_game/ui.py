@@ -1,5 +1,5 @@
 
-import b_game as game
+import game as game
 
 class ui:
 
@@ -13,7 +13,8 @@ class ui:
         val = ''
 
         while val != 'q' and val != 'quit' and val != 'exit':
-            val = input('(w/a/s/d/f/r/q) > ').lower()
+            output = self.p.location.getDirections() + '(w/a/s/d/f/r/q) > '
+            val = input(output).lower()
 
             # adding an event
             if val == 'w' or val == 'a' or val == 's' or val == 'd' or val == 'f' or val == 'r':

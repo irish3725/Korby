@@ -30,19 +30,30 @@ class enemy:
 class node:
     def __init__(self, name=1, n_type='empty', key=False):
         self.n_type = n_type
-        possible_enemies = ['Waddle Dee', 'Waddle Doo', 'Sword Knight', 'Gordo', 'Hot Head', 'Laser Ball', 'Wheelie', 'Broom Hatter', 'UFO', 'Chilly']
-        self.enemies = []
         if n_type == 'fight':
-            # choose random index
-            enemy_name = possible_enemies[int(random.uniform(0, len(possible_enemies)))]
+            self.enemies = self.getEnemies(e_key=key)
 
-            # append random enemy into possible enemies
-            self.enemies.append(enemy(name=enemy_name, key=key))
         self.name = name
         self.north = None
         self.east = None 
         self.south = None
         self.west = None
+
+    def getEnemies(self, e_type='normal', e_number=1, e_key=False):
+        minions = ['Waddle Dee', 'Waddle Doo']
+        possible_enemies = ['Sword Knight', 'Gordo', 'Hot Head', 'Laser Ball', 'Wheelie', 'Broom Hatter', 'UFO', 'Chilly']
+
+        enemies = []
+
+        if e_type == 'normal':
+            enemy_name = possible_enemies[int(random.uniform(0, len(possible_enemies)))]
+            enemies.append(enemy(enemy_name, key=e_key))
+        else:
+            for i in range(e_number):
+                enemy_name = minions[int(random.uniform(0, len(minions)))]
+                enemies.append(enemy(enemy_name, key=e_key))
+
+        return enemies
 
     def setPath(self, direction, n):
         direction = direction.lower()
@@ -67,6 +78,30 @@ class node:
             # set east path on west node
             self.west.east = self
 
+    def getDirections(self):
+        m = 'I see a path to the '
+        directions = []
+        if self.north != None:
+            directions.append('north')
+        if self.east != None:
+            directions.append('east')
+        if self.south != None:
+            directions.append('south')
+        if self.west != None:
+            directions.append('west')
+
+        m += directions[0]
+
+        for i in range(1,len(directions) - 1):
+            m += ', ' + directions[i]
+
+        if len(directions) > 1:
+            m += ', and ' + directions[len(directions) - 1]
+
+        return m + '.\n'
+            
+            
+
 class player:
     def __init__(self, level=1): 
         self.location = None
@@ -88,13 +123,15 @@ class player:
         self.location = location
 
     def action(self, action, message=True):
-        m = ''
 
         if self.state == 'dead':
             return 'You can\'t do anything. You\'re dead'
         elif self.state == 'won':
             return 'Where are you going? You alread won.'
-        elif action == 'w' and self.location.north != None and self.state == None:
+
+        m = ''
+
+        if action == 'w' and self.location.north != None and self.state == None:
             self.location = self.location.north
         elif action == 'a' and self.location.west != None and self.state == None:
             self.location = self.location.west
@@ -128,20 +165,23 @@ class player:
 
     def attack(self):
         m = ''
-        # hit moster
-        self.location.enemies[0].hit()
-        m += self.location.enemies[0].getName() + ': ' + str(self.location.enemies[0].getHealth()) + '\n'
 
-        if self.location.enemies[0].getHealth() < 1:
+        monster = int(random.uniform(0, len(self.location.enemies)))
+
+        # hit moster
+        self.location.enemies[monster].hit()
+        m += self.location.enemies[monster].getName() + ': ' + str(self.location.enemies[monster].getHealth()) + '\n'
+
+        if self.location.enemies[monster].getHealth() < 1:
             m += 'enemy died\n'
-            self.key = self.location.enemies[0].getKey()
+            self.key = self.location.enemies[monster].getKey()
             if self.key:
                 m += 'got key!!!\n'
             self.location.n_type = 'empty'
             self.state = None
         else:
             # take damage from monster
-            self.health -= self.location.enemies[0].attack()
+            self.health -= self.location.enemies[monster].attack()
             if self.health < 1:
                 m += 'Oh dear. You are dead.\n'
                 self.health = 0
@@ -175,7 +215,7 @@ class player:
         self.state = 'fight'
         for enemy in self.location.enemies:
             m += 'There is a ' + enemy.getName() + ' in this room\n'
-        m += 'Would you like to attack(f) or run away(r)?\n'
+        m += 'Would you like to attack or run away?\n'
         
         return m
 
