@@ -155,9 +155,9 @@ class player:
     def action(self, action, message=True):
 
         if self.state == 'dead':
-            return 'You can\'t do anything. You\'re dead'
+            return 'You can\'t do anything. You\'re dead.'
         elif self.state == 'won':
-            return 'Where are you going? You alread won.'
+            return 'Where are you going? You already won.'
 
         m = ''
 
@@ -241,7 +241,7 @@ class player:
             # if player is dead
             if self.health < 1:
                 # append death message
-                m += 'Oh dear. You are dead.\n'
+                m += 'Oh dear, you are dead!\n'
                 # set health to 0 just in case negative
                 self.health = 0
                 # set state to dead
@@ -290,7 +290,7 @@ class player:
         for enemy in self.location.enemies:
             m += 'There is a ' + enemy.getName() + ' in this room\n'
         # ask player if they want to fight or run away
-        m += 'Would you like to attack or run away?\n'
+        m += 'Would you like to fight or run away?\n'
         
         # return message to player
         return m
@@ -314,10 +314,10 @@ class player:
             # change player state to won
             self.state = 'won'
             # return win message
-            m += 'you won!!\n'
+            m += 'You won!!\n'
         # otherwise tell player they need a key
         else:
-            m += 'you need to find the key\n'
+            m += 'You need to find the key.\n'
 
         return m 
 
