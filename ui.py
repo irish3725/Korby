@@ -1,5 +1,5 @@
 
-import game as game
+from final_game import game as game
 
 class ui:
 

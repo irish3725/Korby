@@ -8,7 +8,8 @@ import queue
 import Animation
 import actions
 import sys
-from final_game.game import *
+from game import *
+#from final_game.ui import *
 
 class GUI():
     

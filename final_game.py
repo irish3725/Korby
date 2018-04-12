@@ -2,7 +2,7 @@ import threading
 import random
 
 # my imports
-import ui
+from final_game import ui
 
 class enemy:
     def __init__(self, name='Waddle Dee', max_hit = 65, health=100, key=False):
