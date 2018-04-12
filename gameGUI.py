@@ -16,7 +16,7 @@ class GUI():
         # create widow
         self.win = tk.Tk()
         # list of actions for actual movement
-#        self.actions = [['animation', '', 0]]
+        # self.actions = [['animation', '', 0]]
         self.actions = []
         # actual action buttons for placing on the screen
         self.aButtons = actions.Actions(self.win, self)
