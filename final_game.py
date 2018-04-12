@@ -6,19 +6,14 @@ import ui
 from player import *
 
 class enemy:
-    def __init__(self, name='Waddle Dee', max_hit=65, health=100, key=False):
+    def __init__(self, name='Waddle Dee', max_hit=65, max_health=100, key=False):
         # list of minions
         minions = ['Blipper', 'Cappy', 'Scarfy', 'Waddle Dee', 'Waddle Doo']
 
         self.name = name
-        self.health = health
-        self.max_hit = max_hit
+        self.health = int(max_health)
+        self.max_hit = int(max_hit)
         self.key = key
-
-        if name in minions and health == 100:
-            self.health = 40 
-        if name in minions and max_hit == 65:
-            self.max_hit = 20 
 
     def getName(self):
         return self.name
@@ -54,28 +49,35 @@ class node:
         self.west = None
 
     def getEnemies(self, difficulty='hard', e_number=1, e_key=False):
-        minions = ['Blipper', 'Cappy', 'Scarfy', 'Waddle Dee', 'Waddle Doo']
-        possible_enemies = ['Sword Knight', 'Gordo', 'Hot Head', 'Laser Ball', 'Wheelie', 'Broom Hatter', 'UFO', 'Chilly']
+        minions = ['Gordo', 'Blipper', 'Cappy', 'Scarfy', 'Waddle Dee', 'Waddle Doo']
+        possible_enemies = ['Sword Knight', 'Hot Head', 'Laser Ball', 'Wheelie', 'Broom Hatter', 'UFO', 'Chilly']
 
         # roll for room with multiple easy or one hard
-        if difficulty == 'hard':
-            e_number = int(random.uniform(0,2))
-            e_number = (e_number * 3) + 1
+        e_number = int(random.uniform(0,2))
+        e_number = (e_number * int(random.uniform(1,5))) + 1
 
+        # set max hit and health
+        max_hit = 60 / e_number + e_number
+        max_health = 100 / e_number + e_number
 
+        # if we are fighting more than one, make minions
+        if e_number != 1:
+            possible_enemies = minions
+
+        # create list of enemies
         enemies = []
 
-        # if difficulty is easy, put one easy monster in room
+        # if difficulty is easy, cut power and health in thirds
         if difficulty == 'easy':
-            enemy_name = minions[int(random.uniform(0, len(minions)))]
-            enemies.append(enemy(enemy_name, key=e_key))
-        elif e_number == 1:
+            max_hit = max_hit / 3
+            max_health = max_hit / 3
+
+        # create enemies with these parameters
+        for i in range(e_number):
+            # choose random enemy name
             enemy_name = possible_enemies[int(random.uniform(0, len(possible_enemies)))]
-            enemies.append(enemy(enemy_name, key=e_key))
-        else:
-            for i in range(e_number):
-                enemy_name = minions[int(random.uniform(0, len(minions)))]
-                enemies.append(enemy(enemy_name))
+            # append enemy to list
+            enemies.append(enemy(enemy_name, max_hit, max_health))
 
         return enemies
 

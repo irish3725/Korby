@@ -20,6 +20,8 @@ class player:
         E = []
         S = []
 
+        level = 2
+
         # create level 1
         if level == 1:
             V = ['empty', 'hard_fight', 'chest', 'hard_fight', 'recharge']
@@ -27,6 +29,20 @@ class player:
             S = [1]
             return self.buildGraph(V, E, S)
         if level == 2:
+            V = ['chest', 'recharge', 'empty', 'hard_fight', 'hard_fight', 'easy_fight', 'easy_fight', 'easy_fight', 'easy_fight']
+            E = [[1,2,'west'], [2,3,'west'], [3,6,'north'], [2,5,'north'], [4,5,'west'], [4,7,'north'], [5,8, 'north'], [8,9,'west']]
+            S = [1,3,7,9]
+
+            # shuffel rooms
+            for i in range(len(V)*2):
+                # choose two random rooms
+                r1 = int(random.uniform(0, len(V) - 1))
+                r2 = int(random.uniform(0, len(V) - 1))
+                # swap rooms
+                temp = V[r1]
+                V[r1] = V[r2]
+                V[r2] = temp
+
             return self.buildGraph(V, E, S)
 
     def buildGraph(self, V, E, S, key=False):
