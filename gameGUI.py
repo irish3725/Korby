@@ -8,7 +8,7 @@ import queue
 import Animation
 import actions
 import sys
-from b_game import *
+from final_game.game import *
 
 class GUI():
     
