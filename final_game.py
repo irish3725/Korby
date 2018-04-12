@@ -176,7 +176,7 @@ class player:
         else:
             if message:
                 m += 'can\'t go that way\n'
-            return m
+            return m + self.location.getDirections()
 
         if message:
             m += 'I am now at location ' + str(self.location.name) + ' which is a ' + self.location.n_type + ' room.\n'

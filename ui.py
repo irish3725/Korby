@@ -1,6 +1,6 @@
 
-import game as game
 import os
+import final_game as game
 
 class ui:
 
