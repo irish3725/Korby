@@ -5,7 +5,7 @@ import random
 import ui
 
 class enemy:
-    def __init__(self, name='Waddle Dee', max_hit = 65, health=100, key=False):
+    def __init__(self, name='Waddle Dee', max_hit=65, health=100, key=False):
         # list of minions
         minions = ['Blipper', 'Cappy', 'Scarfy', 'Waddle Dee', 'Waddle Doo']
 
@@ -40,8 +40,11 @@ class enemy:
 class node:
     def __init__(self, name=1, n_type='empty', n_enemies=1, key=False):
         self.n_type = n_type
-        if n_type == 'fight':
-            self.enemies = self.getEnemies(e_key=key, e_number=n_enemies)
+
+        if n_type == 'hard_fight':
+            self.enemies = self.getEnemies(difficulty='hard', e_key=key, e_number=n_enemies)
+        if n_type == 'easy_fight':
+            self.enemies = self.getEnemies(difficulty='easy', e_key=key, e_number=n_enemies)
 
         self.name = name
         self.north = None
@@ -49,19 +52,34 @@ class node:
         self.south = None
         self.west = None
 
-    def getEnemies(self, e_number=1, e_key=False):
+    def getEnemies(self, difficulty='hard', e_number=1, e_key=False):
         minions = ['Blipper', 'Cappy', 'Scarfy', 'Waddle Dee', 'Waddle Doo']
         possible_enemies = ['Sword Knight', 'Gordo', 'Hot Head', 'Laser Ball', 'Wheelie', 'Broom Hatter', 'UFO', 'Chilly']
 
+        # roll for room with multiple easy or one hard
+        if difficulty == 'hard':
+            e_number = int(random.uniform(0,2))
+            e_number = (e_number * 3) + 1
+
+
         enemies = []
 
-        if e_number == 1:
+        # if difficulty is easy, put one easy monster in room
+        if difficulty == 'easy':
+            enemy_name = minions[int(random.uniform(0, len(minions)))]
+            enemies.append(enemy(enemy_name, key=e_key))
+        elif e_number == 1:
             enemy_name = possible_enemies[int(random.uniform(0, len(possible_enemies)))]
             enemies.append(enemy(enemy_name, key=e_key))
         else:
             for i in range(e_number):
                 enemy_name = minions[int(random.uniform(0, len(minions)))]
-                enemies.append(enemy(enemy_name, key=e_key))
+                enemies.append(enemy(enemy_name))
+            # give random monster a key if there needs to be a key
+            monster = int(random.uniform(0,e_number))
+            print('monster', monster, 'has the key')
+            
+            enemies[monster].key = e_key
 
         return enemies
 
@@ -114,6 +132,7 @@ class node:
             
 
 class player:
+
     def __init__(self, level=1): 
         self.location = None
         self.health = 100
@@ -125,9 +144,9 @@ class player:
         if level == 1:
             home = node()
             self.setLocation(home)
-            self.location.setPath('south', node(2, 'fight', n_enemies=3))
+            self.location.setPath('south', node(2, 'hard_fight', n_enemies=3))
             self.location.south.setPath('west', node(3, 'chest'))
-            self.location.south.setPath('east', node(4, 'fight', key=True))
+            self.location.south.setPath('east', node(4, 'hard_fight', key=True))
             self.location.south.setPath('south', node(5, 'recharge'))
 
     def setLocation(self, location):
@@ -162,7 +181,7 @@ class player:
         if message:
             m += 'I am now at location ' + str(self.location.name) + ' which is a ' + self.location.n_type + ' room.\n'
 
-        if self.location.n_type == 'fight':
+        if self.location.n_type == 'hard_fight' or self.location.n_type == 'easy_fight':
             m += self.fight()
         elif self.location.n_type == 'recharge':
             m += self.recharge()
@@ -231,7 +250,7 @@ class player:
                 self.location.n_type = 'empty'
 
 
-        m += 'player health:' + str(self.health) + '\n'
+        m += 'Player Health: ' + str(self.health) + '\n'
 
         return m
 

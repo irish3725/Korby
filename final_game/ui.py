@@ -1,5 +1,6 @@
 
 import game as game
+import os
 
 class ui:
 
@@ -18,6 +19,7 @@ class ui:
 
             # adding an event
             if val == 'w' or val == 'a' or val == 's' or val == 'd' or val == 'f' or val == 'r':
-                print(self.p.action(val))
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print('\n\n' + self.p.action(val))
                 val = ''
 
