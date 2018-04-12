@@ -35,6 +35,11 @@ class GUI():
         self.duration = 1 
         
         self.player = player(1)
+        self.lastMove = ""
+        self.gameText = ""
+        self.game180 = 3
+        self.game90 = 1.5
+        self.gameForward = 1
 
     def center(self):
         self.Korb.reset()
@@ -105,7 +110,7 @@ class GUI():
         # create a place for kirby animation
         self.top = tk.Toplevel()
         a = Animation.Animation(self.top)
-#        thread = threading.Thread(name='animate', target=a.update)
+        # thread = threading.Thread(name='animate', target=a.update)
         a.update(0)
         while len(self.actions) > 0:
             current = self.actions[0][0]
@@ -136,26 +141,180 @@ class GUI():
 
     def set_direction(self, direction):
         self.direction=direction
+
+####################################################################
+
+    def moveNorth(self, newMove):
+        self.gameText = self.player.action('w')
+
+        if "north" in self.gameText:
+            if self.lastMove == "":
+                self.lastMove = newMove
+            
+            if self.lastMove == "north":
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "south":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game180))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "east":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "west":
+                self.Korb.turnWheels(5000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+
+            self.lastMove = newMove
+
+        self.run(self.gameText)
+
+    
+    def moveSouth(self, newMove):
+        self.gameText = self.player.action('s')
+
+        if "south" in self.gameText:
+            if self.lastMove == "":
+                self.lastMove = newMove
+
+            if self.lastMove == "south":
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "north":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game180))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "west":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "east":
+                self.Korb.turnWheels(5000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+
+            self.lastMove = newMove
+
+        self.run(self.gameText)
+
+
+    def moveEast(self, newMove):
+        self.gameText = self.player.action('d')
+
+        if "east" in self.gameText:
+            if self.lastMove == "":
+                self.lastMove = newMove
+
+            if self.lastMove == "east":
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "west":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game180))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "south":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "north":
+                self.Korb.turnWheels(5000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+
+            self.lastMove = newMove
+
+        self.run(self.gameText) 
+
+
+    def moveWest(self, newMove):
+        self.gameText = self.player.action('a')
+
+        if "west" in self.gameText:
+            if self.lastMove == "":
+                self.lastMove = newMove
+
+            if self.lastMove == "west":
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "east":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game180))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "north":
+                self.Korb.turnWheels(7000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+            elif self.lastMove == "south":
+                self.Korb.turnWheels(5000)
+                time.sleep(float(self.game90))
+                self.center()
+                self.Korb.moveWheels(5000)
+                time.sleep(float(self.gameForward))
+                self.center()
+
+            self.lastMove = newMove
+
+        self.run(self.gameText)
+
+####################################################################
  
     def run(self, printText):
         self.win.title("Go Korby!") 
         self.win.geometry("800x500")
 
-
         # NORTH 
-        northButton = tk.Button(self.win, height="4", width="8", text="North", command=lambda: self.run(self.player.action('w')))
+        northButton = tk.Button(self.win, height="4", width="8", text="North", command=lambda: self.moveNorth("north"))
         northButton.grid(column=2, row=1, pady=5, padx=10) 
   
         # EAST 
-        eastButton = tk.Button(self.win, height="4", width="8", text="East", command=lambda: self.run(self.player.action('d')))
+        eastButton = tk.Button(self.win, height="4", width="8", text="East", command=lambda: self.moveEast("east"))
         eastButton.grid(column=3, row=2, pady=5, padx=10) 
 
         # SOUTH
-        southButton = tk.Button(self.win, height="4", width="8", text="South", command=lambda: self.run(self.player.action('s')))
+        southButton = tk.Button(self.win, height="4", width="8", text="South", command=lambda: self.moveSouth("south"))
         southButton.grid(column=2, row=3, pady=5, padx=10) 
 
         # WEST
-        westButton = tk.Button(self.win, height="4", width="8", text="West", command=lambda: self.run(self.player.action('a')))
+        westButton = tk.Button(self.win, height="4", width="8", text="West", command=lambda: self.moveWest("west"))
         westButton.grid(column=1, row=2, pady=5, padx=10)
 
         # FIGHT
