@@ -2,7 +2,7 @@ import threading
 import random
 
 # my imports
-from final_game import ui
+import ui
 
 class enemy:
     def __init__(self, name='Waddle Dee', max_hit = 65, health=100, key=False):
@@ -157,7 +157,7 @@ class player:
         else:
             if message:
                 m += 'can\'t go that way\n'
-            return m
+            return m + self.location.getDirections()
 
         if message:
             m += 'I am now at location ' + str(self.location.name) + ' which is a ' + self.location.n_type + ' room.\n'
