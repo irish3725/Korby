@@ -20,7 +20,7 @@ class player:
         E = []
         S = []
 
-        level = 1
+        level = 2
 
         # create level 1
         if level == 1:
