@@ -14,7 +14,8 @@ class ui:
         val = ''
 
         while val != 'q' and val != 'quit' and val != 'exit':
-            output = self.p.location.getDirections() + '(w/a/s/d/f/r/q) > '
+#            output = self.p.location.getDirections() + '(w/a/s/d/f/r/q) > '
+            output = '(w/a/s/d/f/r/q) > '
             val = input(output).lower()
 
             # adding an event
