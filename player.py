@@ -20,7 +20,7 @@ class player:
         E = []
         S = []
 
-        level = 2
+        level = 1
 
         # create level 1
         if level == 1:
@@ -142,6 +142,8 @@ class player:
             m += self.attack()
         elif action == 'r' and self.state == 'fight' and self.health < 50:
             m += self.run()
+        elif action == 'start':
+            return m + self.location.getDirections()
         else:
             if message:
                 m += 'can\'t go that way\n'

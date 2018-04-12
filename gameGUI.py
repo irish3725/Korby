@@ -32,10 +32,12 @@ class GUI():
         # direction for things
         self.direction = 'up'
         # variable for storing duration
-        self.duration = 1 
-        
+        self.duration = 1
+ 
+        self.firstMove = True        
         self.player = player(1)
-        self.lastMove = ""
+        self.lastMove = "north"
+        self.newMove = ""
         self.gameText = ""
         self.game180 = 3
         self.game90 = 1.5
@@ -144,12 +146,12 @@ class GUI():
 
 ####################################################################
 
-    def moveNorth(self, newMove):
-        self.gameText = self.player.action('w')
+    def moveNorth(self, nm):
+        self.newMove = nm
 
         if "north" in self.gameText:
             if self.lastMove == "":
-                self.lastMove = newMove
+                self.lastMove = self.newMove
             
             if self.lastMove == "north":
                 self.Korb.moveWheels(5000)
@@ -177,19 +179,16 @@ class GUI():
                 time.sleep(float(self.gameForward))
                 self.center()
 
-            self.lastMove = newMove
-
+            self.lastMove = self.newMove
+        self.gameText = self.player.action('w')
         self.run(self.gameText)
 
     
-    def moveSouth(self, newMove):
-        self.gameText = self.player.action('s')
-
+    def moveSouth(self, nm):
+        self.newMove = nm
+        
         if "south" in self.gameText:
-            if self.lastMove == "":
-                self.lastMove = newMove
-
-            if self.lastMove == "south":
+            if self.lastMove == self.newMove:
                 self.Korb.moveWheels(5000)
                 time.sleep(float(self.gameForward))
                 self.center()
@@ -215,17 +214,17 @@ class GUI():
                 time.sleep(float(self.gameForward))
                 self.center()
 
-            self.lastMove = newMove
-
+            self.lastMove = self.newMove
+        self.gameText = self.player.action('s')
         self.run(self.gameText)
 
 
-    def moveEast(self, newMove):
-        self.gameText = self.player.action('d')
+    def moveEast(self, nm):
+        self.newMove = nm
 
         if "east" in self.gameText:
             if self.lastMove == "":
-                self.lastMove = newMove
+                self.lastMove = self.newMove
 
             if self.lastMove == "east":
                 self.Korb.moveWheels(5000)
@@ -253,17 +252,17 @@ class GUI():
                 time.sleep(float(self.gameForward))
                 self.center()
 
-            self.lastMove = newMove
-
+            self.lastMove = self.newMove
+        self.gameText = self.player.action('d')
         self.run(self.gameText) 
 
 
-    def moveWest(self, newMove):
-        self.gameText = self.player.action('a')
+    def moveWest(self, nm):
+        self.newMove = nm
 
         if "west" in self.gameText:
             if self.lastMove == "":
-                self.lastMove = newMove
+                self.lastMove = self.newMove
 
             if self.lastMove == "west":
                 self.Korb.moveWheels(5000)
@@ -291,8 +290,8 @@ class GUI():
                 time.sleep(float(self.gameForward))
                 self.center()
 
-            self.lastMove = newMove
-
+            self.lastMove = self.newMove
+        self.gameText = self.player.action('a')
         self.run(self.gameText)
 
 ####################################################################
@@ -326,7 +325,12 @@ class GUI():
         runButton.grid(column=4, row=2, pady=5, padx=10)
 
         # TEXT
-        textField = tk.Label(self.win, height="13", width="45", text=printText)
+        if self.firstMove:
+            self.firstMove = False
+            self.gameText = self.player.action('start')
+            textField = tk.Label(self.win, height="13", width="45", text=self.gameText)
+        else:
+            textField = tk.Label(self.win, height="13", width="45", text=printText)
         textField.configure(background="black", foreground="white")
         textField.grid(column=5, row=5, pady=5, padx=10)
 
@@ -345,4 +349,4 @@ class GUI():
 
 if __name__ == '__main__':
     gui = GUI()
-    gui.run("Welcome to the game. \n There is a path to the south. \n Which direction would you like to go?")
+    gui.run("")
