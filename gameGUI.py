@@ -149,7 +149,9 @@ class GUI():
     def moveNorth(self, nm):
         self.newMove = nm
 
-        if "north" in self.gameText:
+        if "dead" in self.gameText:
+            pass                
+        elif "north" in self.gameText:
             if self.lastMove == "":
                 self.lastMove = self.newMove
             
@@ -186,8 +188,10 @@ class GUI():
     
     def moveSouth(self, nm):
         self.newMove = nm
-        
-        if "south" in self.gameText:
+       
+        if "dead" in self.gameText:
+            pass
+        elif "south" in self.gameText:
             if self.lastMove == self.newMove:
                 self.Korb.moveWheels(5000)
                 time.sleep(float(self.gameForward))
@@ -222,7 +226,9 @@ class GUI():
     def moveEast(self, nm):
         self.newMove = nm
 
-        if "east" in self.gameText:
+        if "dead" in self.gameText:
+            pass
+        elif "east" in self.gameText:
             if self.lastMove == "":
                 self.lastMove = self.newMove
 
@@ -260,7 +266,9 @@ class GUI():
     def moveWest(self, nm):
         self.newMove = nm
 
-        if "west" in self.gameText:
+        if "dead" in self.gameText:
+            pass
+        elif "west" in self.gameText:
             if self.lastMove == "":
                 self.lastMove = self.newMove
 
@@ -293,6 +301,18 @@ class GUI():
             self.lastMove = self.newMove
         self.gameText = self.player.action('a')
         self.run(self.gameText)
+    
+    def fight(self, fiteme):
+        if "dead" in self.gameText:
+            self.gameText = self.player.action('f')
+            self.run(self.gameText)
+        if "fight" in self.gameText:
+            self.Korb.turnHead(5000)
+            time.sleep(float(self.gameForward))
+            self.center()
+            self.gameText = self.player.action('f')
+            self.run(self.gameText)
+            
 
 ####################################################################
  
@@ -317,7 +337,7 @@ class GUI():
         westButton.grid(column=1, row=2, pady=5, padx=10)
 
         # FIGHT
-        fightButton = tk.Button(self.win, height="4", width="8", text="FIGHT", command=lambda: self.run(self.player.action('f')))
+        fightButton = tk.Button(self.win, height="4", width="8", text="FIGHT", command=lambda: self.fight("fight"))
         fightButton.grid(column=4, row=1, pady=5, padx=10)
         
         # RUN
