@@ -18,13 +18,25 @@ class Korby():
 
     ## set body, head, wheels to middle/not moving
     def reset(self):
-        print('resetting all')
         self.x.setTarget(0, 6000)
         self.x.setTarget(1, 6000)
         self.x.setTarget(2, 6000)
         self.x.setTarget(3, 6000)
         self.x.setTarget(4, 6000)
 
+        self.x.setTarget(6, 4500) #right shoulder up and down
+        self.x.setTarget(7, 7000) #right shoulder in and out
+        self.x.setTarget(8, 7000) #right elbow
+        self.x.setTarget(9, 4500) #right wrist up and down
+        self.x.setTarget(10, 6000) #right wrist left and right
+        self.x.setTarget(11, 6000) #right hand open and close
+
+        self.x.setTarget(12, 5500) #left shoulder up and down
+        self.x.setTarget(13, 7500) #left shoulder in and out
+        self.x.setTarget(14, 4000) #left elbow
+        self.x.setTarget(15, 5500) #left wrist up and down
+        self.x.setTarget(16, 4500) #left wrist left and right
+        self.x.setTarget(17, 6000) #left hand open and close
 
     ## set body, head, wheels to middle/not moving
     def middle(self, key):
@@ -33,6 +45,20 @@ class Korby():
         self.x.setTarget(2, 6000)
         self.x.setTarget(3, 6000)
         self.x.setTarget(4, 6000)
+
+        self.x.setTarget(6, 4500) #right shoulder up and down
+        self.x.setTarget(7, 7000) #right shoulder in and out
+        self.x.setTarget(8, 7000) #right elbow
+        self.x.setTarget(9, 4500) #right wrist up and down
+        self.x.setTarget(10, 6000) #right wrist left and right
+        self.x.setTarget(11, 6000) #right hand open and close
+
+        self.x.setTarget(12, 5500) #left shoulder up and down
+        self.x.setTarget(13, 7500) #left shoulder in and out
+        self.x.setTarget(14, 4000) #left elbow
+        self.x.setTarget(15, 5500) #left wrist up and down
+        self.x.setTarget(16, 4500) #left wrist left and right
+        self.x.setTarget(17, 6000) #left hand open and close
 
     ## move body to the left a little
     def moveBodyLeft(self, key):
@@ -139,6 +165,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         win = tk.Tk()
         Korb = Korby(win)
+        Korb.middle
              
         win.bind('<q>', Korb.endProgram)
         win.bind('<n>', Korb.stop)

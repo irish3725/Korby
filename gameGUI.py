@@ -317,17 +317,29 @@ class GUI():
             self.gameText = self.player.action('f')
             self.run(self.gameText)
             
-    def runningAway(self, runme):
+    def runAway(self, runme):
         self.gameText = self.player.action('r')
         
         if "running north" in self.gameText:
+            print("running north")
             self.moveNorth("north", running=True)
+        elif "running south" in self.gameText:
+            print("running south")
+            self.moveSouth("south", running=True)
+        elif "running east" in self.gameText:
+            print("running east")
+            self.moveEast("east", running=True)
+        elif "running west" in self.gameText:
+            print("running west")
+            self.moveWest("west", running=True)
+        
 
 ####################################################################
  
     def run(self, printText):
         self.win.title("Go Korby!") 
         self.win.geometry("800x500")
+        self.center()
 
         # NORTH 
         northButton = tk.Button(self.win, height="4", width="8", text="North", command=lambda: self.moveNorth("north"))
@@ -350,7 +362,7 @@ class GUI():
         fightButton.grid(column=4, row=1, pady=5, padx=10)
         
         # RUN
-        runButton = tk.Button(self.win, height="4", width="8", text="RUN", command=lambda: self.run(self.player.action('r')))
+        runButton = tk.Button(self.win, height="4", width="8", text="RUN", command=lambda: self.runAway("run"))
         runButton.grid(column=4, row=2, pady=5, padx=10)
 
         # TEXT
