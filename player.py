@@ -230,6 +230,7 @@ class player:
     ## sends player to random adjacent room
     def run(self):
         m = 'running '
+        direction = ''
         # set state to default None
         self.state = None
         # hold current room
@@ -242,22 +243,22 @@ class player:
             if direction == 0:
                 #self.action('w', False)
                 self.action('w')
-                m = m + 'north'
+                direction = 'north'
             elif direction == 1:
                 #self.action('a', False)
                 self.action('a')
-                m = m + 'west'
+                direction = 'west'
             elif direction == 2:
                 #self.action('s', False)
                 self.action('s')
-                m = m + 'south'
+                direction = 'south'
             elif direction == 3:
                 #self.action('d', False)
                 self.action('d')
-                m = m + 'east'
+                direction = 'east'
 
         # return message to player
-        return m + '\n'
+        return m + direction + '\n'
 
     ## method to call when a fight room is
     ## reached
