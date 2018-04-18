@@ -146,7 +146,7 @@ class GUI():
 
 ####################################################################
 
-    def moveNorth(self, nm):
+    def moveNorth(self, nm, running=False):
         self.newMove = nm
 
         if "dead" in self.gameText:
@@ -182,11 +182,12 @@ class GUI():
                 self.center()
 
             self.lastMove = self.newMove
-        self.gameText = self.player.action('w')
+        if running == False:
+            self.gameText = self.player.action('w')
         self.run(self.gameText)
 
     
-    def moveSouth(self, nm):
+    def moveSouth(self, nm, running=False):
         self.newMove = nm
        
         if "dead" in self.gameText:
@@ -219,11 +220,12 @@ class GUI():
                 self.center()
 
             self.lastMove = self.newMove
-        self.gameText = self.player.action('s')
+        if running == False:
+            self.gameText = self.player.action('s')
         self.run(self.gameText)
 
 
-    def moveEast(self, nm):
+    def moveEast(self, nm, running=False):
         self.newMove = nm
 
         if "dead" in self.gameText:
@@ -259,11 +261,12 @@ class GUI():
                 self.center()
 
             self.lastMove = self.newMove
-        self.gameText = self.player.action('d')
+        if running == False:
+            self.gameText = self.player.action('d')
         self.run(self.gameText) 
 
 
-    def moveWest(self, nm):
+    def moveWest(self, nm, running=False):
         self.newMove = nm
 
         if "dead" in self.gameText:
@@ -299,7 +302,8 @@ class GUI():
                 self.center()
 
             self.lastMove = self.newMove
-        self.gameText = self.player.action('a')
+        if running == False:
+            self.gameText = self.player.action('a')
         self.run(self.gameText)
     
     def fight(self, fiteme):
@@ -313,6 +317,11 @@ class GUI():
             self.gameText = self.player.action('f')
             self.run(self.gameText)
             
+    def runningAway(self, runme):
+        self.gameText = self.player.action('r')
+        
+        if "running north" in self.gameText:
+            self.moveNorth("north", running=True)
 
 ####################################################################
  
