@@ -311,14 +311,17 @@ class GUI():
             self.gameText = self.player.action('f')
             self.run(self.gameText)
         if "fight" in self.gameText:
-            self.Korb.turnHead(5000)
-            time.sleep(float(self.gameForward))
-            self.center()
+            self.Korb.fightArm()
+            time.sleep(float(0.7))
             self.gameText = self.player.action('f')
             self.run(self.gameText)
             
     def runAway(self, runme):
-        self.gameText = self.player.action('r')
+        if "dead" in self.gameText:
+            pass
+        else:
+            self.gameText = self.player.action('r')
+            self.Korb.runArms()        
         
         if "running north" in self.gameText:
             print("running north")

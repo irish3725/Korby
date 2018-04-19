@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import time
 import sys
 import tkinter as tk
 from Maestro import Controller
@@ -26,17 +27,54 @@ class Korby():
 
         self.x.setTarget(6, 4500) #right shoulder up and down
         self.x.setTarget(7, 7000) #right shoulder in and out
-        self.x.setTarget(8, 7000) #right elbow
+        self.x.setTarget(8, 5000) #right elbow
         self.x.setTarget(9, 4500) #right wrist up and down
         self.x.setTarget(10, 6000) #right wrist left and right
-        self.x.setTarget(11, 6000) #right hand open and close
+        self.x.setTarget(11, 1000) #right hand open and close
 
         self.x.setTarget(12, 5500) #left shoulder up and down
         self.x.setTarget(13, 7500) #left shoulder in and out
-        self.x.setTarget(14, 4000) #left elbow
+        self.x.setTarget(14, 6000) #left elbow
         self.x.setTarget(15, 5500) #left wrist up and down
-        self.x.setTarget(16, 4500) #left wrist left and right
+        self.x.setTarget(16, 6000) #left wrist left and right
         self.x.setTarget(17, 6000) #left hand open and close
+
+    def runArms(self):
+        self.x.setTarget(6, 9000)
+        self.x.setTarget(8, 9000)
+        time.sleep(float(1))
+        self.x.setTarget(10, 8000)
+        time.sleep(float(0.5))
+        self.x.setTarget(10, 4000)
+        time.sleep(float(0.5))
+        self.x.setTarget(10, 6000)
+        time.sleep(float(0.7))
+        self.reset() 
+
+    def fightArm(self):
+        #self.x.setTarget(0, 4000)
+        #self.x.setTarget(3, 7000)        
+
+        self.x.setAccel(6, 5)
+        self.x.setAccel(7, 5)
+        self.x.setAccel(8, 5)
+
+        self.x.setTarget(6, 9000)
+        self.x.setTarget(8, 9000)
+        self.x.setTarget(7, 9000)
+
+        time.sleep(float(1.3))
+
+        self.x.setAccel(6, 255)
+        self.x.setAccel(7, 255)
+        self.x.setAccel(8, 255)
+
+        time.sleep(float(0.5))
+
+        self.x.setTarget(7, 7000)
+        self.x.setTarget(8, 4000)
+        time.sleep(float(0.1))
+        self.x.setTarget(6, 8000)
 
     ## set body, head, wheels to middle/not moving
     def middle(self, key):
@@ -57,7 +95,7 @@ class Korby():
         self.x.setTarget(13, 7500) #left shoulder in and out
         self.x.setTarget(14, 4000) #left elbow
         self.x.setTarget(15, 5500) #left wrist up and down
-        self.x.setTarget(16, 4500) #left wrist left and right
+        self.x.setTarget(16, 6000) #left wrist left and right
         self.x.setTarget(17, 6000) #left hand open and close
 
     ## move body to the left a little
