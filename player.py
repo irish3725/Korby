@@ -142,11 +142,14 @@ class player:
             m += self.attack()
         elif action == 'r' and self.state == 'fight' and self.health < 50:
             m += self.run()
+        elif action == 'r' and self.state == 'fight' and self.health > 50:
+            m += 'You can\'t run away until your health is below 50.\nAttack instead!'
+            return m
         elif action == 'start':
             return m + self.location.getDirections()
         else:
             if message:
-                m += 'can\'t go that way\n'
+                m += 'Can\'t go that way\n'
             return m + self.location.getDirections()
 
         if message:

@@ -310,30 +310,31 @@ class GUI():
         if "dead" in self.gameText:
             self.gameText = self.player.action('f')
             self.run(self.gameText)
-        if "fight" in self.gameText:
+        if "fight" in self.gameText or "Attack" in self.gameText:
             self.Korb.fightArm()
             time.sleep(float(0.7))
             self.gameText = self.player.action('f')
             self.run(self.gameText)
             
     def runAway(self, runme):
-        if "dead" in self.gameText:
+        if "dead" in self.gameText or "won" in self.gameText:
             pass
         else:
             self.gameText = self.player.action('r')
-            self.Korb.runArms()        
         
-        if "running north" in self.gameText:
-            print("running north")
+        if "instead" in self.gameText:
+            self.run(self.gameText)
+        elif "running north" in self.gameText:
+            self.Korb.runArms()
             self.moveNorth("north", running=True)
         elif "running south" in self.gameText:
-            print("running south")
+            self.Korb.runArms()
             self.moveSouth("south", running=True)
         elif "running east" in self.gameText:
-            print("running east")
+            self.Korb.runArms()
             self.moveEast("east", running=True)
         elif "running west" in self.gameText:
-            print("running west")
+            self.Korb.runArms()
             self.moveWest("west", running=True)
         
 
